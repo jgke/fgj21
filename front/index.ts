@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import './reset.css';
 
 console.log("Hello world!");
 
@@ -6,11 +7,16 @@ console.log("Hello world!");
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container.
 const app = new PIXI.Application();
- 
+
+app.renderer.view.style.position = "absolute";
+app.renderer.view.style.display = "block";
+// app.renderer.autoResize = true;
+app.renderer.resize(window.innerWidth, window.innerHeight);
+
 // The application will create a canvas element for you that you
 // can then insert into the DOM.
 document.body.appendChild(app.view);
- 
+
 // load the texture we need
 PIXI.Loader.shared.add('bunny', 'bunny.png').load((loader, resources) => {
     // This creates a texture from a 'bunny.png' image.
