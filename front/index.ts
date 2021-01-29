@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import './reset.css';
+import { assets, loadAssets } from './src/assets';
 import { SEPARATOR_WIDTH } from './src/constants';
 import {map} from "./src/map";
 import { minigame } from './src/minigame';
@@ -27,28 +28,21 @@ app.stage.addChild(map((app.renderer.width - SEPARATOR_WIDTH)/2));
 app.stage.addChild(divider);
 app.stage.addChild(minigame((app.renderer.width - SEPARATOR_WIDTH)/2));
 
-// load the texture we need
-PIXI.Loader.shared.add('bunny', require('./assets/img/bunny.png')).load((loader, resources) => {
-    // This creates a texture from a 'bunny.png' image.
-    const bunny = new PIXI.Sprite(resources.bunny.texture);
+loadAssets().then(assets => {
+    const nopat = new PIXI.Sprite(assets.nopat.texture);
+
+    nopat.x = app.renderer.width / 2;
+    nopat.y = app.renderer.height / 2;
  
-    // Setup the position of the bunny
-    bunny.x = app.renderer.width / 2;
-    bunny.y = app.renderer.height / 2;
+    nopat.anchor.x = 0.5;
+    nopat.anchor.y = 0.5;
  
-    // Rotate around the center
-    bunny.anchor.x = 0.5;
-    bunny.anchor.y = 0.5;
+    app.stage.addChild(nopat);
  
-    // Add the bunny to the scene we are building.
-    app.stage.addChild(bunny);
- 
-    // Listen for frame updates
     app.ticker.add(() => {
-         // each frame we spin the bunny around a bit
-        bunny.rotation += 0.01;
+        nopat.rotation += 0.01;
     });
-});
+})
 
 {
     let style = new PIXI.TextStyle({
