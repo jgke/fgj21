@@ -24,42 +24,33 @@ divider.beginFill(0xFF0000);
 divider.drawRect(app.renderer.width/2, 0, SEPARATOR_WIDTH, app.renderer.height);
 divider.endFill();
 
-app.stage.addChild(map((app.renderer.width - SEPARATOR_WIDTH)/2));
-app.stage.addChild(divider);
-app.stage.addChild(minigame((app.renderer.width - SEPARATOR_WIDTH)/2));
+loadAssets().then(_assets => {
+    const left = map((app.renderer.width - SEPARATOR_WIDTH) / 2, app);
+    const right = minigame((app.renderer.width - SEPARATOR_WIDTH) / 2, app);
+    right.position.x = (app.renderer.width / 2 + SEPARATOR_WIDTH / 2;
+    app.stage.addChild(left);
+    app.stage.addChild(divider);
+    app.stage.addChild(right);
 
-loadAssets().then(assets => {
-    const nopat = new PIXI.Sprite(assets.nopat.texture);
+    {
+        let style = new PIXI.TextStyle({
+            fontFamily: "Arial",
+            fontSize: 36,
+            fill: "white",
+            stroke: '#ff3300',
+            strokeThickness: 4,
+            dropShadow: true,
+            dropShadowColor: "#000000",
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 6,
+        });
+        const msg = new PIXI.Text("Quo vadis?", style);
+        msg.position.x = app.renderer.width / 2;
+        msg.position.y = 100;
+        msg.anchor.x = 0.5;
 
-    nopat.x = app.renderer.width / 2;
-    nopat.y = app.renderer.height / 2;
- 
-    nopat.anchor.x = 0.5;
-    nopat.anchor.y = 0.5;
- 
-    app.stage.addChild(nopat);
- 
-    app.ticker.add(() => {
-        nopat.rotation += 0.01;
-    });
-})
+        app.stage.addChild(msg);
+    }
 
-{
-    let style = new PIXI.TextStyle({
-        fontFamily: "Arial",
-        fontSize: 36,
-        fill: "white",
-        stroke: '#ff3300',
-        strokeThickness: 4,
-        dropShadow: true,
-        dropShadowColor: "#000000",
-        dropShadowBlur: 4,
-        dropShadowAngle: Math.PI / 6,
-        dropShadowDistance: 6,
-    });
-    const msg = new PIXI.Text("Quo vadis?", style);
-    msg.position.x = app.renderer.width / 2;
-    msg.position.y = 100;
-
-    app.stage.addChild(msg);
-}
+});
