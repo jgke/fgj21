@@ -1,5 +1,8 @@
 import * as PIXI from 'pixi.js';
 import './reset.css';
+import { SEPARATOR_WIDTH } from './src/constants';
+import {map} from "./src/map";
+import { minigame } from './src/minigame';
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
@@ -17,10 +20,12 @@ document.body.appendChild(app.view);
 
 const divider = new PIXI.Graphics();
 divider.beginFill(0xFF0000);
-divider.drawRect(app.renderer.width/2, 0, 28, app.renderer.height);
+divider.drawRect(app.renderer.width/2, 0, SEPARATOR_WIDTH, app.renderer.height);
 divider.endFill();
 
+app.stage.addChild(map((app.renderer.width - SEPARATOR_WIDTH)/2));
 app.stage.addChild(divider);
+app.stage.addChild(minigame((app.renderer.width - SEPARATOR_WIDTH)/2));
 
 // load the texture we need
 PIXI.Loader.shared.add('bunny', require('./assets/img/bunny.png')).load((loader, resources) => {
