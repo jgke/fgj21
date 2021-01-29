@@ -1,8 +1,6 @@
 import * as PIXI from 'pixi.js';
 import './reset.css';
 
-console.log("Hello world!");
-
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container.
@@ -16,6 +14,13 @@ app.renderer.resize(window.innerWidth, window.innerHeight);
 // The application will create a canvas element for you that you
 // can then insert into the DOM.
 document.body.appendChild(app.view);
+
+const divider = new PIXI.Graphics();
+divider.beginFill(0xFF0000);
+divider.drawRect(app.renderer.width/2, 0, 28, app.renderer.height);
+divider.endFill();
+
+app.stage.addChild(divider);
 
 // load the texture we need
 PIXI.Loader.shared.add('bunny', require('./assets/img/bunny.png')).load((loader, resources) => {
@@ -39,3 +44,23 @@ PIXI.Loader.shared.add('bunny', require('./assets/img/bunny.png')).load((loader,
         bunny.rotation += 0.01;
     });
 });
+
+{
+    let style = new PIXI.TextStyle({
+        fontFamily: "Arial",
+        fontSize: 36,
+        fill: "white",
+        stroke: '#ff3300',
+        strokeThickness: 4,
+        dropShadow: true,
+        dropShadowColor: "#000000",
+        dropShadowBlur: 4,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowDistance: 6,
+    });
+    const msg = new PIXI.Text("Quo vadis?", style);
+    msg.position.x = app.renderer.width / 2;
+    msg.position.y = 100;
+
+    app.stage.addChild(msg);
+}
