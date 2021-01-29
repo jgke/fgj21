@@ -15,6 +15,13 @@ app.renderer.resize(window.innerWidth, window.innerHeight);
 // can then insert into the DOM.
 document.body.appendChild(app.view);
 
+const divider = new PIXI.Graphics();
+divider.beginFill(0xFF0000);
+divider.drawRect(app.renderer.width/2, 0, 28, app.renderer.height);
+divider.endFill();
+
+app.stage.addChild(divider);
+
 // load the texture we need
 PIXI.Loader.shared.add('bunny', 'bunny.png').load((loader, resources) => {
     // This creates a texture from a 'bunny.png' image.
@@ -37,3 +44,23 @@ PIXI.Loader.shared.add('bunny', 'bunny.png').load((loader, resources) => {
         bunny.rotation += 0.01;
     });
 });
+
+{
+    let style = new PIXI.TextStyle({
+        fontFamily: "Arial",
+        fontSize: 36,
+        fill: "white",
+        stroke: '#ff3300',
+        strokeThickness: 4,
+        dropShadow: true,
+        dropShadowColor: "#000000",
+        dropShadowBlur: 4,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowDistance: 6,
+    });
+    const msg = new PIXI.Text("Quo vadis?", style);
+    msg.position.x = app.renderer.width / 2;
+    msg.position.y = 100;
+
+    app.stage.addChild(msg);
+}
