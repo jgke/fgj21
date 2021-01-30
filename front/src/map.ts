@@ -133,6 +133,6 @@ export class HouseMap extends GameObject {
     }
 
     public getHistory(): string[] {
-        return this.history.map(n => targetNames[n]);
+        return this.history.map(n => this.targetNames[n]);
     }
 }
