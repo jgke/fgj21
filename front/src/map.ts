@@ -47,6 +47,7 @@ export class HouseMap extends GameObject {
     private drunkard: Player;
     private playerRoute: number[];
     private currentTarget: number;
+    private history: number[];
 
     constructor(width: number, app: PIXI.Application) {
         super();
@@ -55,7 +56,8 @@ export class HouseMap extends GameObject {
         this.height = app.renderer.height;
 
         this.drunkard = new Player();
-        this.playerRoute = this.findRoute(0, 1, {});
+        this.history = [0];
+        this.playerRoute = this.findRoute(this.history[0], 1, {});
         this.currentTarget = this.playerRoute.pop();
         this.drunkard.setPosition(this.hotspots[0][0], this.hotspots[0][1]);
 
@@ -94,7 +96,7 @@ export class HouseMap extends GameObject {
     }
 
     public tick(delta: number) {
-        let playerSpeed = 10;
+        let playerSpeed = 1;
         let target = this.hotspots[this.currentTarget];
         let pPos = this.drunkard.getPosition();
         let dx = target[0] - pPos[0];
@@ -102,13 +104,14 @@ export class HouseMap extends GameObject {
 
         if (dx * dx + dy * dy <= 10) {
             if (this.playerRoute.length === 0) {
+                this.history.push(this.currentTarget);
                 let curIndex = this.targets.indexOf(this.currentTarget);
                 let newTarget = Math.floor(Math.random() * (this.targets.length - 1));
                 if (newTarget >= this.currentTarget) {
                     newTarget += 1;
                 }
                 this.playerRoute = this.findRoute(this.currentTarget, this.targets[newTarget], {});
-                console.log("New route from", this.currentTarget, "to", this.targets[newTarget], ": ", this.playerRoute);
+                //console.log("New route from", this.currentTarget, "to", this.targets[newTarget], ": ", this.playerRoute);
             } else {
                 this.currentTarget = this.playerRoute.pop();
             }
@@ -117,5 +120,9 @@ export class HouseMap extends GameObject {
             let y = Math.sign(dy) * Math.min(Math.abs(dy), playerSpeed * delta);
             this.drunkard.setPosition(x + pPos[0], y + pPos[1]);
         }
+    }
+
+    public getHistory() {
+        return this.history;
     }
 }

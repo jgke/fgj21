@@ -35,9 +35,45 @@ function init() {
     app.stage.addChild(divider);
     app.stage.addChild(right);
 
-    app.ticker.add(delta => {
+    let style = new PIXI.TextStyle({
+        fontFamily: "Arial",
+        fontSize: 70,
+        fill: "white",
+        stroke: '#ff3300',
+        strokeThickness: 4,
+        dropShadow: true,
+        dropShadowColor: "#000000",
+        dropShadowBlur: 4,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowDistance: 6,
+    });
+    const msg = new PIXI.Text("60", style);
+    msg.position.x = app.renderer.width / 2;
+    msg.position.y = 100;
+    msg.anchor.x = 0.5;
+
+    app.stage.addChild(msg);
+
+    let time = 30;
+
+    let gameplay = delta => {
         left.tick(delta);
         right.tick(delta);
+        time -= delta / 60;
+        msg.text = `${Math.round(time)}`
+        if(time <= 0){
+            ticker = morning;
+        }
+    }
+
+    let morning = delta => {
+
+    }
+
+    let ticker = gameplay;
+
+    app.ticker.add(delta => {
+        ticker(delta);
     });
 
     const player = assets.disco;
