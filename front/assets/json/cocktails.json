@@ -1,0 +1,203 @@
+{
+    "meta":"name: name of cocktail (mixing minigame instance). poursamt: number of pours (int). bottles: list of available bottles for the cocktail [bottles.name(string)]. description: flavor text.",
+    "cocktails":
+    [
+        {
+            "name":"alcopop 1",
+            "pouramt":2,
+            "bottles":
+            [  
+                {"name":"Moskovskaya Vodka"},
+                {"name":"Betel-Cola"},
+                {"name":"Lemon Selkie"},
+                {"name":"van Betelgeuse Apple Liqueur"},
+                {"name":"van Betelgeuse strawberry liqueur"}
+            ],
+            "description":"Something simple that goes down easy."
+        },
+        {
+            "name":"alcopop 2",
+            "pouramt":2,
+            "bottles":
+            [  
+                {"name":"Commodore Richmond's"},
+                {"name":"Moskovskaya Vodka"},
+                {"name":"Betel-Cola"},
+                {"name":"Lemon Selkie"},
+                {"name":"El Segell Prosecco"},
+                {"name":"Club Soda"}
+            ],
+            "description":"Simple doesn't have to mean boring!"
+        },
+        {
+            "name":"alcopop 3",
+            "pouramt":2,
+            "bottles":
+            [  
+                {"name":"Commodore Richmond's"},
+                {"name":"Glengoolie blue"},
+                {"name":"Betel-Cola"},
+                {"name":"Lemon Selkie"},
+                {"name":"Club Soda"}
+            ],
+            "description":"When dark spirits alone are too fancy."
+        },
+        {
+            "name":"punch 1",
+            "pouramt":3,
+            "bottles":
+            [  
+                {"name":"Moskovskaya Vodka"},
+                {"name":"Commodore Richmond's"},
+                {"name":"van Betelgeuse strawberry liqueur"},
+                {"name":"van Betelgeuse Apple Liqueur"},
+                {"name":"Club Soda"},
+                {"name":"Lemon Selkie"}
+            ],
+            "description":"Easy, sweet and potent!"
+        },
+        {
+            "name":"punch 2",
+            "pouramt":3,
+            "bottles":
+            [  
+                {"name":"Moskovskaya Vodka"},
+                {"name":"Ramkwik Tonic Wine"},
+                {"name":"Volodymyr Fortified Wine"},
+                {"name":"Lemon Selkie"},
+                {"name":"Club Soda"}
+            ],
+            "description":"Hearty, warming and potent!"
+        },
+        {
+            "name":"punch 3",
+            "pouramt":4,
+            "bottles":
+            [  
+                {"name":"Spiritus Fortis"},
+                {"name":"Club Soda"},
+                {"name":"Lemon Selkie"},
+                {"name":"LonGINk"},
+                {"name":"van Betelgeuse Apple Liqueur"}
+            ],
+            "description":"How am I supposed to bury all that?"
+        },
+        {
+            "name":"boilermaker 1",
+            "pouramt":2,
+            "bottles":
+            [
+                {"name":"Nasspiss Lager"},
+                {"name":"Moskovskaya Vodka"},
+                {"name":"Commodore Richmond's"},
+                {"name":"Glengoolie blue"},
+                {"name":"Green Godmother"}
+            ],
+            "description":"Up, periscope!"
+        },
+        {
+            "name":"boilermaker 2",
+            "pouramt":2,
+            "bottles":
+            [
+                {"name":"Nasspiss Lager"},
+                {"name":"Eddy40"},
+                {"name":"Commodore Richmond's"},
+                {"name":"Glengoolie blue"}
+            ],
+            "description":"Put some hair on your chest!"
+        },
+        {
+            "name":"boilermaker 3",
+            "pouramt":2,
+            "bottles":
+            [
+                {"name":"Nasspiss Lager"},
+                {"name":"Eddy40"},
+                {"name":"Moskovskaya Vodka"},
+                {"name":"Drammath"}
+            ],
+            "description":"Wildcard!"
+        },
+        {
+            "name":"suicide 1",
+            "pouramt":3,
+            "bottles":
+            [  
+                {"name":"Spiritus Fortis"},
+                {"name":"Green Godmother"},
+                {"name":"Ramkwik Tonic Wine"},
+                {"name":"Drammath"}
+            ],
+            "description":"No. No. Nooooooo."
+        },
+        {
+            "name":"suicide 2",
+            "pouramt":3,
+            "bottles":
+            [  
+                {"name":"Volodymyr Fortified Wine"},
+                {"name":"Ramkwik Tonic Wine"},
+                {"name":"Eddy40"},
+                {"name":"lonGINk"}
+            ],
+            "description":"Just.... Why?"
+        },
+        {
+            "name":"fancy 1",
+            "pouramt":4,
+            "bottles":
+            [  
+                {"name":"Moskovskaya Vodka"},
+                {"name":"Commodore Richmond's"},
+                {"name":"van Betelgeuse Apple Liqueur"},
+                {"name":"van Betelgeuse strawberry liqueur"},
+                {"name":"Drammath"},
+                {"name":"Club Soda"},
+                {"name":"Lemon Selkie"},
+                {"name":"Burning Branch Tonic Water"}
+            ],
+            "description":"This can go so many ways. Some may have a name!"
+        },
+        {
+            "name":"fancy 2",
+            "pouramt":4,
+            "bottles":
+            [  
+                {"name":"Green Godmother"},
+                {"name":"Moskovskaya Vodka"},
+                {"name":"Volodymyr Fortified Wine"},
+                {"name":"El Segell Prosecco"},
+                {"name":"Club Soda"},
+                {"name":"Lemon Selkie"}
+            ],
+            "description":"Back of the cabinet scrapings... I am intimidated, yet intrigued."
+        },
+        {
+            "name":"fancy 3",
+            "pouramt":4,
+            "bottles":
+            [  
+                {"name":"Commodore Richmond's"},
+                {"name":"Glengoolie blue"},
+                {"name":"Drammath"},
+                {"name":"Club Soda"},
+                {"name":"Ramkwik Tonic Wine"}
+            ],
+            "description":"The Rat Pack would approve!"
+        },
+        {
+            "name":"hair of the dog",
+            "pouramt":3,
+            "bottles":
+            [  
+                {"name":"Green Godmother"},
+                {"name":"Moskovskaya Vodka"},
+                {"name":"Eddy40"},
+                {"name":"Club Soda"},
+                {"name":"Lemon Selkie"}
+            ],
+            "description":"A hair of the dog that bit you will cure the wound."
+        }
+    ]
+}

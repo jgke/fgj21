@@ -3,7 +3,7 @@
     "bottles":
     [
         {
-            "name":"Moskovskaya",
+            "name":"Moskovskaya Vodka",
             "pourvol":4,
             "alcvol":40,
             "sweetvol":0,
@@ -17,7 +17,7 @@
             "description":"Sweet and smooth."
         },
         {
-            "name":"Glengoolie blue",
+            "name":"Glengoolie Blue",
             "pourvol":4,
             "alcvol":50,
             "sweetvol":2,

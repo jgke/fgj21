@@ -7,8 +7,8 @@
         "par": 90,
         "cocktails":
         [
-            {"name":"alcopop1"},  
-            {"name":"alcopop2"}
+            {"name":"alcopop 1"},  
+            {"name":"alcopop 2"}
         ],
         "description":"You've got many days of fun ahead of you. You shouldn't jump too deep too soon."
     },
@@ -17,9 +17,9 @@
         "par":120,
         "cocktails":
         [
-            {"name":"alcopop2"},  
-            {"name":"punch1"},  
-            {"name":"boilermaker3"}
+            {"name":"alcopop 2"},  
+            {"name":"punch 1"},  
+            {"name":"boilermaker 3"}
         ],
         "description":"The whole nation is celebrating! So should you."
     },
@@ -28,10 +28,10 @@
         "par": 160,
         "cocktails":
         [
-            {"name":"punch3"},  
-            {"name":"suicide1"},  
-            {"name":"boilermaker1"},  
-            {"name":"alcopop3"}
+            {"name":"punch 3"},  
+            {"name":"suicide 1"},  
+            {"name":"boilermaker 1"},  
+            {"name":"alcopop 3"}
         ],
         "description":"These guys are nuts. Prepare for a confusing night and a horrible morning."
     },
@@ -40,9 +40,9 @@
         "par": 12,
         "cocktails":
         [
-             {"name":"alcopop1"},  
-             {"name":"boilermaker2"},  
-             {"name":"suicide2"}
+             {"name":"alcopop 1"},  
+             {"name":"boilermaker 2"},  
+             {"name":"suicide 2"}
         ],
         "description":"A laid-back evening with the lads."
     },
@@ -51,9 +51,9 @@
         "par": 90,
         "cocktails":
         [
-            {"name":"alcopop3"},  
-            {"name":"boilermaker2"},  
-            {"name":"fancy1"}
+            {"name":"alcopop 3"},  
+            {"name":"boilermaker 2"},  
+            {"name":"fancy 1"}
         ],
         "description":"You're heading off to town, but not on an empty head!"
     },
@@ -63,8 +63,8 @@
         "cocktails":
         [
              {"name":"punch2"},  
-             {"name":"fancy1"},  
-             {"name":"fancy2"}
+             {"name":"fancy 1"},  
+             {"name":"fancy 2"}
         ],
         "description":"You love them, but you can't stand them sober..."
     },
@@ -73,9 +73,9 @@
         "par":120,
         "cocktails":
         [
-            {"name":"otd1"},  
-            {"name":"boilermaker3"},  
-            {"name":"boilermaker1"}
+            {"name":"hair of the dog"},  
+            {"name":"boilermaker 3"},  
+            {"name":"boilermaker 1"}
         ],
         "description":"Whewh! That was a lot of work! You've got one day to taper it off before work tomorrow."
     }
