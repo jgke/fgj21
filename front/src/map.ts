@@ -34,6 +34,13 @@ export class HouseMap extends GameObject {
 
     private targets = [0, 3, 5, 6];
 
+    private targetNames = {
+        0: "bottom left",
+        3: "bottom right",
+        5: "top left",
+        6: "top right"
+    };
+
     private routes = {
         0: [1],
         1: [0, 2, 4],
@@ -43,6 +50,8 @@ export class HouseMap extends GameObject {
         5: [4],
         6: [4]
     };
+
+    
 
     private drunkard: Player;
     private playerRoute: number[];
@@ -97,7 +106,6 @@ export class HouseMap extends GameObject {
 
     public tick(delta: number, ticks: number) {
         let playerSpeed = 10;
-        console.log(this.currentTarget);
         let target = this.hotspots[this.currentTarget];
         let pPos = this.drunkard.getPosition();
         let dx = target[0] - pPos[0];
@@ -107,14 +115,12 @@ export class HouseMap extends GameObject {
             if (this.playerRoute.length === 0) {
                 this.history.push(this.currentTarget);
                 let curIndex = this.targets.indexOf(this.currentTarget);
-                console.log(curIndex);
                 let newTarget = Math.floor(Math.random() * (this.targets.length - 1));
                 if (newTarget >= curIndex) {
                     newTarget += 1;
                 }
-                console.log(newTarget, this.targets[newTarget]);
                 this.playerRoute = this.findRoute(this.currentTarget, this.targets[newTarget], {});
-                console.log("New route from", this.currentTarget, "to", this.targets[newTarget], ": ", this.playerRoute);
+                //console.log("New route from", this.currentTarget, "to", this.targets[newTarget], ": ", this.playerRoute);
                 this.currentTarget = this.playerRoute.pop();
             } else {
                 this.currentTarget = this.playerRoute.pop();
@@ -127,6 +133,6 @@ export class HouseMap extends GameObject {
     }
 
     public getHistory(): string[] {
-        return this.history.map(n => ({0: "bottom left", 3: "bottom right", 5: "top left", 6: "top right"})[n]);
+        return this.history.map(n => targetNames[n]);
     }
 }
