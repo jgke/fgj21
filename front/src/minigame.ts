@@ -5,6 +5,12 @@ import { Sprite } from './movables';
 
 export function minigame(width: number, app: PIXI.Application) {
     const container = new PIXI.Container();
+    
+    const background = new PIXI.Sprite(assets.baari.texture);
+    const bg_scale = Math.min(width / background.width * 1.5, app.renderer.height / background.height);
+    background.scale.set(bg_scale, bg_scale);
+    container.addChild(background);
+
     const nopat = new Sprite(assets.nopat.texture, { speed: 5 });
     const pressed_keys: PressedKeys = { ArrowLeft: false, ArrowRight: false, ArrowUp: false, ArrowDown: false }
 
