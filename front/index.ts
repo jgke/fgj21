@@ -54,9 +54,7 @@ function initNight() {
     const left = new HouseMap(subwindow_width, app);
     const right = new Minigame(subwindow_width + SEPARATOR_WIDTH, subwindow_width, app);
 
-    app.stage.addChild(left);
-    app.stage.addChild(divider);
-    app.stage.addChild(right);
+    app.stage.addChild(left, divider, right);
 
     let time = 5;
     const msg = new PIXI.Text(`${time}`, timerStyle);
@@ -70,8 +68,7 @@ function initNight() {
     score_txt.anchor.x = 0.5;
     score_txt.text = `Score: ${game.score}`;
 
-    app.stage.addChild(msg);
-    app.stage.addChild(score_txt);
+    app.stage.addChild(msg, score_txt);
 
     ticker = delta => {
         ticks += delta;

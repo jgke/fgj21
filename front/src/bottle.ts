@@ -40,7 +40,7 @@ export class Bottle extends PIXI.Sprite {
 
     const name = new PIXI.Text(`${this.options.name}`, bottleStyle);
     name.position.x = this.x;
-    name.position.y = this.y - 20;
+    name.position.y = this.y + 20;
     this.addChild(name);
   }
 
@@ -64,7 +64,7 @@ export class Bottle extends PIXI.Sprite {
     const center = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(0, g_vpos - g_height / 2).lineTo(0, g_vpos + g_height / 2);
     const left = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(-g_width, g_vpos - g_height).lineTo(-g_width, g_vpos + g_height);
     const right = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(g_width, g_vpos - g_height).lineTo(g_width, g_vpos + g_height);
-    [gauge, center, left, right].forEach(g => this.addChild(g));
+    this.addChild(gauge, center, left, right);
   }
 
   public drawPourGame = (event) => {

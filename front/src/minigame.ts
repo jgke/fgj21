@@ -40,12 +40,10 @@ export class Minigame extends GameObject {
         counter.scale.set(scale, scale);
         baari_shading.scale.set(scale, scale);
 
-        this.addChild(background); 
-        this.addChild(counter); 
+        this.addChild(background, counter); 
 
         this.bottles = shuffle(bottles.bottles).map((b, i) => new Bottle(this, counter_height, this.width, i, b));
-        // this.addChild(this.bottles[6]);
-        this.bottles.forEach(b => this.addChild(b));
+        this.addChild(...this.bottles)
 
         this.addChild(baari_shading);
     }
