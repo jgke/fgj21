@@ -15,8 +15,10 @@ export function map (width: number, app: PIXI.Application) {
  
     container.addChild(nopat);
  
-    app.ticker.add(() => {
-        nopat.rotation += 0.01;
+    let ticks = 0;
+    app.ticker.add(delta => {
+        ticks += app.ticker.deltaTime;
+        nopat.y = app.renderer.height/2 + 100 * Math.sin(ticks/100);
     });
     return container;
 }

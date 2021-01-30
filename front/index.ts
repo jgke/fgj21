@@ -27,7 +27,7 @@ divider.endFill();
 loadAssets().then(_assets => {
     const left = map((app.renderer.width - SEPARATOR_WIDTH) / 2, app);
     const right = minigame((app.renderer.width - SEPARATOR_WIDTH) / 2, app);
-    right.position.x = (app.renderer.width / 2 + SEPARATOR_WIDTH / 2;
+    right.position.x = app.renderer.width / 2 + SEPARATOR_WIDTH / 2;
     app.stage.addChild(left);
     app.stage.addChild(divider);
     app.stage.addChild(right);
