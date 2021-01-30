@@ -45,7 +45,9 @@ div#retraceList>ol>li>button {
     margin-left: 10px;
 }
 
-.drunkCanvas {}
+.drunkCanvas {
+    pointer-events: none;
+}
 
 .drunkContainer {
     position: absolute;
