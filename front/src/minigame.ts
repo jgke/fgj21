@@ -6,6 +6,16 @@ import { GameObject } from './GameObject';
 
 import bottles from '../assets/json/bottles.json';
 
+// from https://javascript.info/array-methods#shuffle-an-array
+// Better than sorting with Math.random because Math.random is biased.
+function shuffle<T extends Array<any>>(array: T): T {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
 export class Minigame extends GameObject {
     public score = 0;
     private bottles: Bottle[] = [];
@@ -25,7 +35,7 @@ export class Minigame extends GameObject {
         const counter = new PIXI.Sprite(assets.counter.texture);
         counter.y = counter_height;
         const baari_shading = new PIXI.Sprite(assets.baari_shading.texture);
-        const scale = Math.min(width / background.width * 1.5, app.renderer.height / background.height);
+        const scale = Math.min(width / background.width, app.renderer.height / background.height);
         background.scale.set(scale, scale);
         counter.scale.set(scale, scale);
         baari_shading.scale.set(scale, scale);
@@ -33,9 +43,9 @@ export class Minigame extends GameObject {
         this.addChild(background); 
         this.addChild(counter); 
 
-        this.bottles = bottles.bottles.map(b => new Bottle(this, counter_height, b));
-        this.addChild(this.bottles[6]);
-        // this.bottles.forEach(b => this.addChild(b));
+        this.bottles = shuffle(bottles.bottles).map((b, i) => new Bottle(this, counter_height, this.width, i, b));
+        // this.addChild(this.bottles[6]);
+        this.bottles.forEach(b => this.addChild(b));
 
         this.addChild(baari_shading);
     }

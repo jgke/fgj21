@@ -2,6 +2,14 @@ import * as PIXI from 'pixi.js';
 import { assets } from './assets';
 import { Minigame } from './minigame';
 
+let bottleStyle = new PIXI.TextStyle({
+  fontFamily: "Comic Sans MS",
+  fontSize: 40,
+  fill: "white",
+  stroke: '#000000',
+  strokeThickness: 1,
+});
+
 export class Bottle extends PIXI.Sprite {
   gametime = false;
   gamegauge = 0;
@@ -11,14 +19,17 @@ export class Bottle extends PIXI.Sprite {
   private g_height;
   private aim_line;
   private minigame: Minigame;
+  private options;
 
-  constructor(minigame: Minigame, counter_height: number, options) {
+  constructor(minigame: Minigame, counter_height: number, counter_width: number, bottle_index: number, options) {
     super(options.bottle_name === undefined || assets[options.bottle_name] === undefined ? assets.bottle.texture : assets[options.bottle_name].texture);
     this.minigame = minigame;
+    this.options = options;
+    
     this.anchor.set(.5, 1);
-    this.scale.set(.4, .4)
+    this.scale.set(.15, .15)
     this.y = counter_height;
-    this.x = 150;
+    this.x = 100 + 30 * (bottle_index) + 5 * Math.sin(bottle_index * 93879823.234);
 
     this.g_vpos = -this.height * .7 / this.scale.y;
     this.g_width = this.width / 2 * 1.5 / this.scale.x;
@@ -26,6 +37,11 @@ export class Bottle extends PIXI.Sprite {
 
     this.interactive = true;
     this.on('mousedown', this.drawPourGame);
+
+    const name = new PIXI.Text(`${this.options.name}`, bottleStyle);
+    name.position.x = this.x;
+    name.position.y = this.y - 20;
+    this.addChild(name);
   }
 
   updateGame(tick: number) {

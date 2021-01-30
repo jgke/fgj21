@@ -53,7 +53,6 @@ function initNight() {
     const subwindow_width = (app.renderer.width - SEPARATOR_WIDTH) / 2;
     const left = new HouseMap(subwindow_width, app);
     const right = new Minigame(subwindow_width + SEPARATOR_WIDTH, subwindow_width, app);
-    right.position.x = app.renderer.width / 2 + SEPARATOR_WIDTH / 2;
 
     app.stage.addChild(left);
     app.stage.addChild(divider);
