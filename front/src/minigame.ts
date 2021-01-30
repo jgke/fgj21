@@ -51,8 +51,7 @@ export class Minigame extends GameObject {
     }, false);
 
     }
-    public tick(delta: number) {
-        this.ticks += delta;
-        this.bottle.updateGame(this.ticks);
+    public tick(delta: number, ticks: number) {
+        this.bottle.updateGame(ticks);
     }
 }

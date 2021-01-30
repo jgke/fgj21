@@ -95,7 +95,7 @@ export class HouseMap extends GameObject {
         }
     }
 
-    public tick(delta: number) {
+    public tick(delta: number, ticks: number) {
         let playerSpeed = 1;
         let target = this.hotspots[this.currentTarget];
         let pPos = this.drunkard.getPosition();

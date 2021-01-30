@@ -26,6 +26,8 @@ divider.beginFill(0xFF0000);
 divider.drawRect(app.renderer.width / 2, 0, SEPARATOR_WIDTH, app.renderer.height);
 divider.endFill();
 
+let ticks = 0;
+
 function init() {
     const left = new HouseMap((app.renderer.width - SEPARATOR_WIDTH) / 2, app);
     const right = new Minigame(app.renderer.width / 2 + SEPARATOR_WIDTH / 2, (app.renderer.width - SEPARATOR_WIDTH) / 2, app);
@@ -57,8 +59,9 @@ function init() {
     let time = 30;
 
     let gameplay = delta => {
-        left.tick(delta);
-        right.tick(delta);
+        ticks += delta;
+        left.tick(delta, ticks);
+        right.tick(delta, ticks);
         time -= delta / 60;
         msg.text = `${Math.round(time)}`
         if(time <= 0){
