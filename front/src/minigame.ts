@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import * as Tone from 'tone';
 import { assets } from './assets';
 import { PressedKeys } from './interfaces';
 import { Sprite } from './movables';

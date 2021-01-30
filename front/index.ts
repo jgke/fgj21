@@ -1,9 +1,11 @@
 import * as PIXI from 'pixi.js';
 import './reset.css';
+import './index.css';
 import { assets, loadAssets } from './src/assets';
 import { SEPARATOR_WIDTH } from './src/constants';
 import {map} from "./src/map";
 import { minigame } from './src/minigame';
+import * as Tone from 'tone';
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
@@ -24,13 +26,16 @@ divider.beginFill(0xFF0000);
 divider.drawRect(app.renderer.width/2, 0, SEPARATOR_WIDTH, app.renderer.height);
 divider.endFill();
 
-loadAssets().then(_assets => {
+
+function init() {
     const left = map((app.renderer.width - SEPARATOR_WIDTH) / 2, app);
     const right = minigame((app.renderer.width - SEPARATOR_WIDTH) / 2, app);
     right.position.x = app.renderer.width / 2 + SEPARATOR_WIDTH / 2;
     app.stage.addChild(left);
     app.stage.addChild(divider);
     app.stage.addChild(right);
+    
+    
 
     {
         let style = new PIXI.TextStyle({
@@ -52,5 +57,27 @@ loadAssets().then(_assets => {
 
         app.stage.addChild(msg);
     }
+    {
 
+        //const distortion = new Tone.AutoPanner("4n").toDestination().start();
+        //const synth = assets.disco.connect(distortion);
+        const synth = assets.disco.toDestination();
+        synth.loop = true;
+
+        synth.start();
+    }
+}
+
+loadAssets().then(_assets => {
+    const div = document.createElement("div");
+    div.id = "startbuttonContainer";
+    const button = document.createElement("button");
+    button.id = "startbutton";
+    button.textContent = "Start";
+    button.onclick = () => {
+        document.body.removeChild(div);
+        init();
+    };
+    div.appendChild(button);
+    document.body.appendChild(div);
 });

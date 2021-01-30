@@ -1,0 +1,15 @@
+#startbuttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#startbutton {
+    position: relative;
+    border-radius: 10px;
+    width: 100px;
+    height: 50px;
+    font-weight: bold;
+}
