@@ -1,9 +1,26 @@
 import * as PIXI from 'pixi.js';
 import { assets } from './assets';
 
-export function minigame (width: number, app: PIXI.Application) { 
+class Sprite extends PIXI.Sprite {
+    move(pressed_keys: PressedKeys) {
+        if (pressed_keys.ArrowRight) this.x += 5;
+        if (pressed_keys.ArrowLeft) this.x -= 5;
+        if (pressed_keys.ArrowUp) this.y -= 5;
+        if (pressed_keys.ArrowDown) this.y += 5;
+    }
+}
+
+interface PressedKeys {
+    ArrowLeft: boolean
+    ArrowRight: boolean
+    ArrowUp: boolean
+    ArrowDown: boolean
+}
+
+export function minigame(width: number, app: PIXI.Application) {
     const container = new PIXI.Container();
-    const nopat = new PIXI.Sprite(assets.nopat.texture);
+    const nopat = new Sprite(assets.nopat.texture);
+    const pressed_keys: PressedKeys = { ArrowLeft: false, ArrowRight: false, ArrowUp: false, ArrowDown: false }
 
     nopat.x = width / 2;
     nopat.y = app.renderer.height / 2;
@@ -11,37 +28,26 @@ export function minigame (width: number, app: PIXI.Application) {
     nopat.anchor.y = 0.5;
 
     container.addChild(nopat);
- 
+
     let ticks = 0;
     app.ticker.add(delta => {
         ticks += delta;
-        nopat.y = app.renderer.height/2 + 100 * Math.sin(ticks/100);
+        // nopat.y = app.renderer.height / 2 + 100 * Math.sin(ticks / 100);
+        nopat.move(pressed_keys);
     });
 
-    let player_controlled_objects = [nopat];
-
     document.addEventListener('keydown', (event) => {
-        // console.log(event.key);
-        const keyName = event.key;
-    
-        if (keyName === 'ArrowLeft') {
-        player_controlled_objects.forEach(o => o.x -= 10);
-        return;
+        if (event.key in pressed_keys) {
+            pressed_keys[event.key] = true;
         }
-        if (keyName === 'ArrowRight') {
-        player_controlled_objects.forEach(o => o.x += 10);
-        return;
-        }
-        if (keyName === 'ArrowUp') {
-        player_controlled_objects.forEach(o => o.y -= 10);
-        return;
-        }
-        if (keyName === 'ArrowDown') {
-        player_controlled_objects.forEach(o => o.y += 10);
-        return;
-        }
-    
     }, false);
-    
+
+    document.addEventListener('keyup', (event) => {
+        if (event.key in pressed_keys) {
+            pressed_keys[event.key] = false;
+        }
+    }, false);
+
+
     return container;
 }
