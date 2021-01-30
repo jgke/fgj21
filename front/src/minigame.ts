@@ -4,9 +4,12 @@ import { assets } from './assets';
 import { PressedKeys } from './interfaces';
 import { Sprite } from './movables';
 
-export function minigame(width: number, app: PIXI.Application) {
+export function minigame(x: number, width: number, app: PIXI.Application) {
     const container = new PIXI.Container();
-    
+    container.position.x = x;
+    const minigame_mask = new PIXI.Graphics().beginFill(0xFF0033).drawRect(x, 0, width, app.renderer.height).endFill();
+    container.mask = minigame_mask;
+
     const background = new PIXI.Sprite(assets.baari.texture);
     const bg_scale = Math.min(width / background.width * 1.5, app.renderer.height / background.height);
     background.scale.set(bg_scale, bg_scale);
