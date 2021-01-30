@@ -8,10 +8,26 @@ import { Minigame } from './src/minigame';
 import * as Tone from 'tone';
 import { distance } from './src/distance';
 
+function drunkCanvas(original: HTMLCanvasElement, width: number, height: number) {
+    const canvas = document.createElement("canvas");
+    canvas.className = "drunkCanvas"
+    canvas.width = width;
+    canvas.height = height;
+    let ctx = canvas.getContext("2d");
+
+    window.setInterval(
+        _ => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(original, 0, 0);
+        }, 1000 / 60)
+
+    return canvas;
+}
+
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container.
-const app = new PIXI.Application();
+const app = new PIXI.Application({ preserveDrawingBuffer: true });
 
 app.renderer.view.style.position = "absolute";
 app.renderer.view.style.display = "block";
@@ -21,6 +37,11 @@ app.renderer.resize(window.innerWidth, window.innerHeight);
 // The application will create a canvas element for you that you
 // can then insert into the DOM.
 document.body.appendChild(app.view);
+let drunkContainer = document.createElement("div");
+drunkContainer.className = "drunkContainer;"
+let drunk = drunkCanvas(app.view, window.innerWidth, window.innerHeight);
+//drunkContainer.appendChild(drunk);
+//document.body.appendChild(drunk);
 
 const divider = new PIXI.Graphics();
 divider.beginFill(0xFF0000);
@@ -50,7 +71,7 @@ export class Game {
 
 function initNight() {
     const game = new Game();
-    
+
     const subwindow_width = (app.renderer.width - SEPARATOR_WIDTH) / 2;
     const left = new HouseMap(subwindow_width, app);
     const right = new Minigame(subwindow_width + SEPARATOR_WIDTH, subwindow_width, app);
@@ -84,17 +105,19 @@ function initNight() {
             initMorning(left.getHistory());
         }
     };
+}
 
+function playSound() {
     const player = assets.disco;
     player.loop = true;
 
     const reverb = new Tone.Freeverb(0);
     const delay = new Tone.FeedbackDelay(0);
 
-    reverb.roomSize.rampTo(0.8, 10);
-    delay.feedback.rampTo(0.8, 10);
+    //reverb.roomSize.rampTo(0.8, 10);
+    //delay.feedback.rampTo(0.8, 10);
 
-    player.chain(reverb, delay, Tone.Destination);
+    player.chain(/*reverb, delay,*/ Tone.Destination);
 
     player.start();
 }
@@ -135,7 +158,6 @@ function shuffle<T>(arr: T[]) {
 }
 
 function initMorning(history: string[]) {
-    console.log(history);
     let start = history[0];
     let end = history[history.length - 1];
     let middle = history.slice(1, history.length - 1);
@@ -202,10 +224,25 @@ function initMorning(history: string[]) {
             console.log(answers)
             console.log(middle)
             console.log(scrambledMiddle)
-            console.log(distance(
+            const dist = distance(
                 answers.map(key => indices[key]),
                 middle.map(key => indices[key])
-            ));
+            );
+            const percentage = (answers.length - dist) / answers.length;
+            document.body.removeChild(container);
+
+            const secondContainer = document.createElement("div");
+            secondContainer.id = "retraceList"
+            const continueButton = document.createElement("button");
+            continueButton.id = "continueButton";
+            continueButton.textContent = `You got ${Math.round(100 * percentage)}% correctly`;
+            continueButton.onclick = () => {
+                document.body.removeChild(secondContainer);
+                initNight();
+            };
+            secondContainer.appendChild(continueButton);
+            document.body.appendChild(secondContainer);
+
             cont = false;
         }
     };
@@ -223,7 +260,10 @@ loadAssets().then(_assets => {
     button.textContent = "Start";
     button.onclick = () => {
         document.body.removeChild(div);
-        Tone.start().then(() => initNight())
+        Tone.start().then(() => {
+            playSound();
+            initNight();
+        });
         //Tone.start().then(() => initMorning(["1", "first", "second", "third", "fourth", "2"]))
     };
     div.appendChild(button);
