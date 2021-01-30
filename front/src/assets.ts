@@ -6,6 +6,9 @@ export interface Assets {
     nopat: PIXI.Sprite
     tmpmap: PIXI.Sprite
     baari: PIXI.Sprite
+    baari_bg: PIXI.Sprite
+    baari_shading: PIXI.Sprite
+    counter: PIXI.Sprite
     bottle: PIXI.Sprite
     blue_bottle: PIXI.Sprite
     green_bottle: PIXI.Sprite
@@ -21,6 +24,9 @@ const images: {[k in keyof Partial<typeof assets>]: any} = {
     nopat: require('../assets/img/nopat.png'),
     tmpmap: require('../assets/img/tmpmap.png'),
     baari: require('../assets/img/baari.jpg'),
+    baari_bg: require('../assets/img/baari_bg.jpg'),
+    baari_shading: require('../assets/img/baari_shading.png'),
+    counter: require('../assets/img/counter.png'),
     bottle: require('../assets/img/bottle.png'),
     blue_bottle: require('../assets/img/blue_bottle.png'),
     green_bottle: require('../assets/img/green_bottle.png'),
