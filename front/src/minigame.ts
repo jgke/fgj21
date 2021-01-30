@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import * as Tone from 'tone';
 import { assets } from './assets';
+import { Bottle } from './bottle';
 import { PressedKeys } from './interfaces';
 import { Sprite } from './movables';
 
@@ -15,20 +16,25 @@ export function minigame(x: number, width: number, app: PIXI.Application) {
     background.scale.set(bg_scale, bg_scale);
     container.addChild(background);
 
-    const nopat = new Sprite(assets.nopat.texture, { speed: 5 });
+    const counter_height = app.renderer.height / 2;
+    const bottle = new Bottle(counter_height);
+    container.addChild(bottle);
+
+    // const nopat = new Sprite(assets.nopat.texture, { speed: 5 });
     const pressed_keys: PressedKeys = { ArrowLeft: false, ArrowRight: false, ArrowUp: false, ArrowDown: false }
 
-    nopat.x = width / 2;
-    nopat.y = app.renderer.height / 2;
-    nopat.anchor.x = 0.5;
-    nopat.anchor.y = 0.5;
+    // nopat.x = width / 2;
+    // nopat.y = app.renderer.height / 2;
+    // nopat.anchor.x = 0.5;
+    // nopat.anchor.y = 0.5;
 
-    container.addChild(nopat);
+    // container.addChild(nopat);
 
     let ticks = 0;
     app.ticker.add(delta => {
         ticks += delta;
-        nopat.move(pressed_keys);
+        bottle.updateGame(ticks);
+        // nopat.move(pressed_keys);
     });
 
     document.addEventListener('keydown', (event) => {

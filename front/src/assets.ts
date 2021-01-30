@@ -6,15 +6,17 @@ export interface Assets {
     nopat: PIXI.Sprite
     tmpmap: PIXI.Sprite
     baari: PIXI.Sprite
+    bottle: PIXI.Sprite
     disco: Tone.Player,
 }
 
 export const assets: Assets = {} as any;
 
 const images: {[k in keyof Partial<typeof assets>]: any} = {
-    "nopat": require('../assets/img/nopat.png'),
-    "tmpmap": require('../assets/img/tmpmap.png'),
-    "baari": require('../assets/img/baari.jpg'),
+    nopat: require('../assets/img/nopat.png'),
+    tmpmap: require('../assets/img/tmpmap.png'),
+    baari: require('../assets/img/baari.jpg'),
+    bottle: require('../assets/img/bottle.png'),
 };
 
 const audioOgg: {[k in 'disco']: any} = {
