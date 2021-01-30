@@ -22,7 +22,7 @@ export const assets: Assets = {} as any;
 
 const images: {[k in keyof Partial<typeof assets>]: any} = {
     nopat: require('../assets/img/nopat.png'),
-    tmpmap: require('../assets/img/tmpmap.png'),
+    tmpmap: require('../assets/img/Helmilä.png'),
     baari: require('../assets/img/baari.jpg'),
     baari_bg: require('../assets/img/baari_bg.jpg'),
     baari_shading: require('../assets/img/baari_shading.png'),

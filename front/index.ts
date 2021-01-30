@@ -96,7 +96,11 @@ function initNight() {
 
     app.stage.addChild(left, divider, right);
 
+<<<<<<< HEAD
     let time = game.day.par * 5;
+=======
+    let time = 60;
+>>>>>>> WIP updates map to some random apt
     const msg = new PIXI.Text(`${time}`, timerStyle);
     msg.position.x = app.renderer.width / 2;
     msg.position.y = 100;
