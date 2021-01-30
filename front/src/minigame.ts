@@ -17,5 +17,31 @@ export function minigame (width: number, app: PIXI.Application) {
         ticks += delta;
         nopat.y = app.renderer.height/2 + 100 * Math.sin(ticks/100);
     });
+
+    let player_controlled_objects = [nopat];
+
+    document.addEventListener('keydown', (event) => {
+        // console.log(event.key);
+        const keyName = event.key;
+    
+        if (keyName === 'ArrowLeft') {
+        player_controlled_objects.forEach(o => o.x -= 10);
+        return;
+        }
+        if (keyName === 'ArrowRight') {
+        player_controlled_objects.forEach(o => o.x += 10);
+        return;
+        }
+        if (keyName === 'ArrowUp') {
+        player_controlled_objects.forEach(o => o.y -= 10);
+        return;
+        }
+        if (keyName === 'ArrowDown') {
+        player_controlled_objects.forEach(o => o.y += 10);
+        return;
+        }
+    
+    }, false);
+    
     return container;
 }
