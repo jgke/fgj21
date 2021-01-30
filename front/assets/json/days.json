@@ -1,0 +1,83 @@
+{
+    "meta":"name: name of day (game level). par: par time before points start decreasing (int(s)). cocktails: list of cocktails mixed during the day ([cocktails:name (string)]). description: flavor text.",
+    "days":
+    [
+    {
+        "name":"Soft Landing",
+        "par": 90,
+        "cocktails":
+        [
+            {"name":"alcopop1"},  
+            {"name":"alcopop2"}
+        ],
+        "description":"You've got many days of fun ahead of you. You shouldn't jump too deep too soon."
+    },
+    {
+        "name":"National Holiday",
+        "par":120,
+        "cocktails":
+        [
+            {"name":"alcopop2"},  
+            {"name":"punch1"},  
+            {"name":"boilermaker3"}
+        ],
+        "description":"The whole nation is celebrating! So should you."
+    },
+    {
+        "name":"Frat Party",
+        "par": 160,
+        "cocktails":
+        [
+            {"name":"punch3"},  
+            {"name":"suicide1"},  
+            {"name":"boilermaker1"},  
+            {"name":"alcopop3"}
+        ],
+        "description":"These guys are nuts. Prepare for a confusing night and a horrible morning."
+    },
+    {
+        "name":"Boys' Night",
+        "par": 12,
+        "cocktails":
+        [
+             {"name":"alcopop1"},  
+             {"name":"boilermaker2"},  
+             {"name":"suicide2"}
+        ],
+        "description":"A laid-back evening with the lads."
+    },
+    {
+        "name":"Pre-Loading",
+        "par": 90,
+        "cocktails":
+        [
+            {"name":"alcopop3"},  
+            {"name":"boilermaker2"},  
+            {"name":"fancy1"}
+        ],
+        "description":"You're heading off to town, but not on an empty head!"
+    },
+    {
+        "name":"Family Gathering",
+        "par": 11,
+        "cocktails":
+        [
+             {"name":"punch2"},  
+             {"name":"fancy1"},  
+             {"name":"fancy2"}
+        ],
+        "description":"You love them, but you can't stand them sober..."
+    },
+    {
+        "name":"Off Day",
+        "par":120,
+        "cocktails":
+        [
+            {"name":"otd1"},  
+            {"name":"boilermaker3"},  
+            {"name":"boilermaker1"}
+        ],
+        "description":"Whewh! That was a lot of work! You've got one day to taper it off before work tomorrow."
+    }
+    ]
+}
