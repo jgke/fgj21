@@ -8,7 +8,7 @@
             "alcvol":40,
             "sweetvol":0,
             "description":"Simple and effective.",
-            "bottle_name": "green_bottle"
+            "bottle_name": "opaque_bottle"
         },
         {
             "name":"Commodore Richmond's",
@@ -24,7 +24,7 @@
             "alcvol":50,
             "sweetvol":2,
             "description":"Cask-strength, the connoisseur's choice!",
-            "bottle_name": "green_bottle"
+            "bottle_name": "red_bottle"
         },
         {
             "name":"Green Godmother",
@@ -40,7 +40,7 @@
             "alcvol":95,
             "sweetvol":0,
             "description":"Medical-grade doesn't mean healthy.",
-            "bottle_name": "green_bottle"
+            "bottle_name": "red_bottle"
         },
         {
             "name": "van Betelgeuse strawberry liqueur",
@@ -48,7 +48,7 @@
             "alcvol":20, 
             "sweetvol":10,
             "description:":"Liquid candy.",
-            "bottle_name": "green_bottle"
+            "bottle_name": "red_bottle"
         },
         {
             "name":"van Betelgeuse apple liqueur",
@@ -56,7 +56,7 @@
             "alcvol":20, 
             "sweetvol":8,
             "description":"Liquid sour candy.",
-            "bottle_name": "green_bottle"
+            "bottle_name": "yellow_bottle"
         },
         {
             "name":"Drammath",
@@ -64,7 +64,7 @@
             "alcvol":40, 
             "sweetvol":8,
             "description":"The finest distillate, honey and botanicals.",
-            "bottle_name": "green_bottle"
+            "bottle_name": "yellow_bottle"
         },
         {
             "name":"El Segell Prosecco",
@@ -72,7 +72,7 @@
             "alcvol":10, 
             "sweetvol":5,
             "description":"Not too sweet, not too sour. Giggle potion!",
-            "bottle_name": "green_bottle"
+            "bottle_name": "yellow_bottle"
         },
         { 
             "name":"Ramkwik Tonic Wine",  
@@ -80,7 +80,7 @@
             "alcvol":20,
             "sweetvol":8,
             "description":"A staple on lands high and low!",
-            "bottle_name": "green_bottle"
+            "bottle_name": "blue_bottle"
         },
         { 
             "name":"Volodymyr Fortified Wine",  
@@ -88,7 +88,7 @@
             "alcvol":10,
             "sweetvol":10,
             "description":"Sickly sweet, but potent!",
-            "bottle_name": "green_bottle"
+            "bottle_name": "blue_bottle"
         },
         {
             "name":"Eddy40",
@@ -104,7 +104,7 @@
             "alcvol":5,
             "sweetvol":3,
             "description":"Olympic history in a can!",
-            "bottle_name": "green_bottle"
+            "bottle_name": "blue_bottle"
         },
         {
             "name":"Nasspiss Lager",
@@ -120,7 +120,7 @@
             "alcvol":0,
             "sweetvol":0,
             "description":"A little something, not much of anything.",
-            "bottle_name": "green_bottle"
+            "bottle_name": "blue_bottle"
         },
         {
             "name":"Betel-Cola",
@@ -144,7 +144,7 @@
             "alcvol":0,
             "sweetvol":3,
             "description":"None of that plastic bottle swill!",
-            "bottle_name": "green_bottle"
+            "bottle_name": "opaque_bottle"
         }
     ]
 }

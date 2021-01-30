@@ -11,24 +11,21 @@ export class Bottle extends PIXI.Sprite {
   private g_height;
   private aim_line;
   private minigame: Minigame;
-  
-  constructor(minigame: Minigame, counter_height: number, texture?: PIXI.Texture) {
-    super(texture !== undefined ? texture : assets.bottle.texture);
+
+  constructor(minigame: Minigame, counter_height: number, options) {
+    super(options.bottle_name === undefined || assets[options.bottle_name] === undefined ? assets.bottle.texture : assets[options.bottle_name].texture);
     this.minigame = minigame;
     this.anchor.set(.5, 1);
-    this.scale.set(.4,.4)
+    this.scale.set(.4, .4)
     this.y = counter_height;
     this.x = 150;
-    this.defineGaugeSpecs();
 
-    this.interactive = true;
-    this.on('mousedown', this.drawPourGame);
-  }
-
-  private defineGaugeSpecs = () => {
     this.g_vpos = -this.height * .7 / this.scale.y;
     this.g_width = this.width / 2 * 1.5 / this.scale.x;
     this.g_height = this.height / 10 / this.scale.y;
+
+    this.interactive = true;
+    this.on('mousedown', this.drawPourGame);
   }
 
   updateGame(tick: number) {
@@ -45,29 +42,27 @@ export class Bottle extends PIXI.Sprite {
       }
     }
   }
-  
+
+  drawGauge = (g_vpos: number, g_width: number, g_height: number) => {
+    const gauge = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(-g_width, g_vpos).lineTo(g_width, g_vpos);
+    const center = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(0, g_vpos - g_height / 2).lineTo(0, g_vpos + g_height / 2);
+    const left = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(-g_width, g_vpos - g_height).lineTo(-g_width, g_vpos + g_height);
+    const right = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(g_width, g_vpos - g_height).lineTo(g_width, g_vpos + g_height);
+    [gauge, center, left, right].forEach(g => this.addChild(g));
+  }
+
   public drawPourGame = (event) => {
     if (this.gametime) {
+      // Game ends
       const score = 100 - Math.abs(this.gamegauge) * 100;
-      console.log(`Game ended :( Your pour accuracy was ${score.toFixed(0)} %`);
       this.gametime = false;
       this.removeChildren();
       this.aim_line = undefined;
       this.minigame.score += score;
     } else {
-      console.log("Game time!");
+      // Game starts
       this.gametime = true;
-      const g_vpos = this.g_vpos;
-      const g_width = this.g_width;
-      const g_height = this.g_height;
-      const gauge = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(-g_width, g_vpos).lineTo(g_width, g_vpos);
-      const center = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(0,g_vpos - g_height / 2).lineTo(0,g_vpos + g_height / 2);
-      const left = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(-g_width, g_vpos - g_height).lineTo(-g_width, g_vpos + g_height);
-      const right = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(g_width, g_vpos - g_height).lineTo(g_width, g_vpos + g_height);
-      this.addChild(gauge);
-      this.addChild(center);
-      this.addChild(left);
-      this.addChild(right);
+      this.drawGauge(this.g_vpos, this.g_width, this.g_height);
     }
   }
 }

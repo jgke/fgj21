@@ -4,9 +4,11 @@ import { assets } from './assets';
 import { Bottle } from './bottle';
 import { GameObject } from './GameObject';
 
+import bottles from '../assets/json/bottles.json';
+
 export class Minigame extends GameObject {
     public score = 0;
-    private bottle: Bottle;
+    private bottles: Bottle[] = [];
     // private pressed_keys: PressedKeys;
     // private ticks: number = 0;
 
@@ -23,11 +25,12 @@ export class Minigame extends GameObject {
         this.addChild(background);
 
         const counter_height = app.renderer.height / 2;
-        this.bottle = new Bottle(this, counter_height);
-        this.addChild(this.bottle);
+        this.bottles = bottles.bottles.map(b => new Bottle(this, counter_height, b));
+        this.addChild(this.bottles[6]);
+        // this.bottles.forEach(b => this.addChild(b));
     }
     
     public tick(delta: number, ticks: number) {
-        this.bottle.updateGame(ticks);
+        this.bottles.forEach(b => b.updateGame(ticks));
     }
 }
