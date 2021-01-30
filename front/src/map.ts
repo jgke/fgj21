@@ -57,7 +57,7 @@ export class HouseMap extends GameObject {
 
         this.drunkard = new Player();
         this.history = [0];
-        this.playerRoute = this.findRoute(this.history[0], 1, {});
+        this.playerRoute = this.findRoute(this.history[0], 3, {});
         this.currentTarget = this.playerRoute.pop();
         this.drunkard.setPosition(this.hotspots[0][0], this.hotspots[0][1]);
 
@@ -97,6 +97,7 @@ export class HouseMap extends GameObject {
 
     public tick(delta: number, ticks: number) {
         let playerSpeed = 10;
+        console.log(this.currentTarget);
         let target = this.hotspots[this.currentTarget];
         let pPos = this.drunkard.getPosition();
         let dx = target[0] - pPos[0];
@@ -106,12 +107,15 @@ export class HouseMap extends GameObject {
             if (this.playerRoute.length === 0) {
                 this.history.push(this.currentTarget);
                 let curIndex = this.targets.indexOf(this.currentTarget);
+                console.log(curIndex);
                 let newTarget = Math.floor(Math.random() * (this.targets.length - 1));
-                if (newTarget >= this.currentTarget) {
+                if (newTarget >= curIndex) {
                     newTarget += 1;
                 }
+                console.log(newTarget, this.targets[newTarget]);
                 this.playerRoute = this.findRoute(this.currentTarget, this.targets[newTarget], {});
-                //console.log("New route from", this.currentTarget, "to", this.targets[newTarget], ": ", this.playerRoute);
+                console.log("New route from", this.currentTarget, "to", this.targets[newTarget], ": ", this.playerRoute);
+                this.currentTarget = this.playerRoute.pop();
             } else {
                 this.currentTarget = this.playerRoute.pop();
             }
@@ -122,7 +126,7 @@ export class HouseMap extends GameObject {
         }
     }
 
-    public getHistory() {
-        return this.history;
+    public getHistory(): string[] {
+        return this.history.map(n => ({0: "bottom left", 3: "bottom right", 5: "top left", 6: "top right"})[n]);
     }
 }

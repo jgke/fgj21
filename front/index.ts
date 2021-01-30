@@ -6,6 +6,7 @@ import { SEPARATOR_WIDTH } from './src/constants';
 import { HouseMap } from "./src/map";
 import { Minigame } from './src/minigame';
 import * as Tone from 'tone';
+import { distance } from './src/distance';
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
@@ -27,7 +28,7 @@ divider.drawRect(app.renderer.width / 2, 0, SEPARATOR_WIDTH, app.renderer.height
 divider.endFill();
 
 let ticks = 0;
-let ticker = (delta: number) => {};
+let ticker = (delta: number) => { };
 
 let timerStyle = new PIXI.TextStyle({
     fontFamily: "Arial",
@@ -78,7 +79,7 @@ function initNight() {
         score_txt.text = `Score: ${game.score.toFixed(0)}`;
         time -= delta / 60;
         msg.text = `${Math.round(time)}`
-        if(time <= 0){
+        if (time <= 0) {
             app.stage.removeChildren();
             initMorning(left.getHistory());
         }
@@ -98,14 +99,115 @@ function initNight() {
     player.start();
 }
 
-function initMorning(history: number[]) {
+function h2(text: string) {
+    const elem = document.createElement("h2");
+    elem.textContent = text;
+    return elem;
+}
+
+function span(text: string) {
+    const elem = document.createElement("span");
+    elem.textContent = text;
+    return elem;
+}
+
+function clamp(a: number, x: number, b: number) {
+    if (a > x) {
+        return a;
+    } else if (b < x) {
+        return b;
+    }
+    return x;
+}
+
+function swapNodes(node: HTMLElement, beforeIndex: number, afterIndex: number) {
+    node.parentNode.insertBefore(
+        node.parentNode.children[clamp(0, afterIndex, node.parentNode.children.length - 1)],
+        node.parentNode.children[clamp(0, beforeIndex, node.parentNode.children.length - 1)])
+};
+
+function shuffle<T>(arr: T[]) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function initMorning(history: string[]) {
     console.log(history);
-    let msg = new PIXI.Text(`History: ${history}`, timerStyle );
-    msg.position.x = app.renderer.width / 2;
-    msg.position.y = 100;
-    msg.anchor.x = 0.5;
-    app.stage.addChild(msg);
+    let start = history[0];
+    let end = history[history.length - 1];
+    let middle = history.slice(1, history.length - 1);
+    let scrambledMiddle = shuffle([...middle]);
+
+    const container = document.createElement("div");
+    container.id = "retraceList"
+    container.appendChild(h2("Retrace your steps!"));
+    container.appendChild(span(`You started from ${start}, but what happened then?`));
+
+    const nl = document.createElement("ol");
+    scrambledMiddle.forEach((element, i) => {
+        const li = document.createElement("li");
+
+        const up = document.createElement("button");
+        up.textContent = "Move up";
+        up.className = "moveUp";
+
+        up.onclick = () => {
+            const index = [...li.parentNode.childNodes as any as HTMLElement[]].indexOf(li);
+            swapNodes(li, index - 1, index);
+        }
+
+        const down = document.createElement("button");
+        down.textContent = "Move down";
+        down.className = "moveDown";
+        down.onclick = () => {
+            const index = [...li.parentNode.childNodes as any as HTMLElement[]].indexOf(li);
+            swapNodes(li, index, index + 1);
+        }
+
+        li.appendChild(span(`${element}`));
+        li.appendChild(up);
+        li.appendChild(down);
+
+        nl.appendChild(li);
+    });
+    container.appendChild(nl);
+
+    container.appendChild(span(`Finally you end up at ${end}`));
+
+    let cont = false;
+    const continueButton = document.createElement("button");
+    continueButton.id = "continueButton";
+    continueButton.textContent = "Continue";
+    continueButton.onclick = () => { cont = true; };
+    container.appendChild(continueButton);
+
+    document.body.appendChild(container);
+
+
+
     ticker = (delta: number) => {
+        if (cont) {
+            let options = new Set(history);
+            let indices = {};
+            let index = 0;
+            options.forEach(key => {
+                indices[key] = index;
+                index += 1;
+            });
+
+            let answers = [...nl.childNodes as any as HTMLElement[]].map(elem => elem.firstChild.textContent);
+            console.log(answers)
+            console.log(middle)
+            console.log(scrambledMiddle)
+            console.log(distance(
+                answers.map(key => indices[key]),
+                middle.map(key => indices[key])
+            ));
+            cont = false;
+        }
     };
 }
 
@@ -122,6 +224,7 @@ loadAssets().then(_assets => {
     button.onclick = () => {
         document.body.removeChild(div);
         Tone.start().then(() => initNight())
+        //Tone.start().then(() => initMorning(["1", "first", "second", "third", "fourth", "2"]))
     };
     div.appendChild(button);
     document.body.appendChild(div);
