@@ -57,15 +57,18 @@ function init() {
 
         app.stage.addChild(msg);
     }
-    {
+        const player = assets.disco;
+        player.loop = true;
 
-        //const distortion = new Tone.AutoPanner("4n").toDestination().start();
-        //const synth = assets.disco.connect(distortion);
-        const synth = assets.disco.toDestination();
-        synth.loop = true;
+        const reverb = new Tone.Freeverb(0);
+        const delay = new Tone.FeedbackDelay(0);
 
-        synth.start();
-    }
+        reverb.roomSize.rampTo(0.8, 10);
+        delay.feedback.rampTo(0.8, 10);
+
+        player.chain(reverb, delay, Tone.Destination);
+
+        player.start();
 }
 
 loadAssets().then(_assets => {
@@ -76,7 +79,7 @@ loadAssets().then(_assets => {
     button.textContent = "Start";
     button.onclick = () => {
         document.body.removeChild(div);
-        init();
+        Tone.start().then(() => init())
     };
     div.appendChild(button);
     document.body.appendChild(div);
