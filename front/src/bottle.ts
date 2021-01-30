@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { assets } from './assets';
+import { Minigame } from './minigame';
 
 export class Bottle extends PIXI.Sprite {
   gametime = false;
@@ -9,10 +10,13 @@ export class Bottle extends PIXI.Sprite {
   private g_width;
   private g_height;
   private aim_line;
+  private minigame: Minigame;
   
-  constructor(counter_height: number, texture?: PIXI.Texture) {
+  constructor(minigame: Minigame, counter_height: number, texture?: PIXI.Texture) {
     super(texture !== undefined ? texture : assets.bottle.texture);
+    this.minigame = minigame;
     this.anchor.set(.5, 1);
+    this.scale.set(.4,.4)
     this.y = counter_height;
     this.x = 150;
     this.defineGaugeSpecs();
@@ -22,9 +26,9 @@ export class Bottle extends PIXI.Sprite {
   }
 
   private defineGaugeSpecs = () => {
-    this.g_vpos = -this.height * .7;
-    this.g_width = this.width / 2 * 1.5;
-    this.g_height = 20;
+    this.g_vpos = -this.height * .7 / this.scale.y;
+    this.g_width = this.width / 2 * 1.5 / this.scale.x;
+    this.g_height = this.height / 10 / this.scale.y;
   }
 
   updateGame(tick: number) {
@@ -49,6 +53,7 @@ export class Bottle extends PIXI.Sprite {
       this.gametime = false;
       this.removeChildren();
       this.aim_line = undefined;
+      this.minigame.score += score;
     } else {
       console.log("Game time!");
       this.gametime = true;

@@ -7,6 +7,11 @@ export interface Assets {
     tmpmap: PIXI.Sprite
     baari: PIXI.Sprite
     bottle: PIXI.Sprite
+    blue_bottle: PIXI.Sprite
+    green_bottle: PIXI.Sprite
+    opaque_bottle: PIXI.Sprite
+    red_bottle: PIXI.Sprite
+    yellow_bottle: PIXI.Sprite
     disco: Tone.Player,
 }
 
@@ -17,6 +22,11 @@ const images: {[k in keyof Partial<typeof assets>]: any} = {
     tmpmap: require('../assets/img/tmpmap.png'),
     baari: require('../assets/img/baari.jpg'),
     bottle: require('../assets/img/bottle.png'),
+    blue_bottle: require('../assets/img/blue_bottle.png'),
+    green_bottle: require('../assets/img/green_bottle.png'),
+    opaque_bottle: require('../assets/img/opaque_bottle.png'),
+    red_bottle: require('../assets/img/red_bottle.png'),
+    yellow_bottle: require('../assets/img/yellow_bottle.png'),
 };
 
 const audioOgg: {[k in 'disco']: any} = {

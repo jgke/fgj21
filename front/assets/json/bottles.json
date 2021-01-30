@@ -7,126 +7,144 @@
             "pourvol":4,
             "alcvol":40,
             "sweetvol":0,
-            "description":"Simple and effective."       
+            "description":"Simple and effective.",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Commodore Richmond's",
             "pourvol":4,
             "alcvol":40,
             "sweetvol":2,
-            "description":"Sweet and smooth."
+            "description":"Sweet and smooth.",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Glengoolie Blue",
             "pourvol":4,
             "alcvol":50,
             "sweetvol":2,
-            "description":"Cask-strength, the connoisseur's choice!"
+            "description":"Cask-strength, the connoisseur's choice!",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Green Godmother",
             "pourvol":4,
             "alcvol":65,
             "sweetvol":1,
-            "description":"I can't remember if I've ever tried absinthe before..."
+            "description":"I can't remember if I've ever tried absinthe before...",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Spiritus Fortis",
             "pourvol":4,
             "alcvol":95,
             "sweetvol":0,
-            "description":"Medical-grade doesn't mean healthy."
+            "description":"Medical-grade doesn't mean healthy.",
+            "bottle_name": "green_bottle"
         },
         {
             "name": "van Betelgeuse strawberry liqueur",
             "pourvol":4,
             "alcvol":20, 
             "sweetvol":10,
-            "description:":"Liquid candy."
+            "description:":"Liquid candy.",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"van Betelgeuse apple liqueur",
             "pourvol":4,
             "alcvol":20, 
             "sweetvol":8,
-            "description":"Liquid sour candy."
+            "description":"Liquid sour candy.",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Drammath",
             "pourvol":4,
             "alcvol":40, 
             "sweetvol":8,
-            "description":"The finest distillate, honey and botanicals."
+            "description":"The finest distillate, honey and botanicals.",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"El Segell Prosecco",
             "pourvol":6,
             "alcvol":10, 
             "sweetvol":5,
-            "description":"Not too sweet, not too sour. Giggle potion!"
+            "description":"Not too sweet, not too sour. Giggle potion!",
+            "bottle_name": "green_bottle"
         },
         { 
             "name":"Ramkwik Tonic Wine",  
             "pourvol":6,  
             "alcvol":20,
             "sweetvol":8,
-            "description":"A staple on lands high and low!"
+            "description":"A staple on lands high and low!",
+            "bottle_name": "green_bottle"
         },
         { 
             "name":"Volodymyr Fortified Wine",  
             "pourvol":6,  
             "alcvol":10,
             "sweetvol":10,
-            "description":"Sickly sweet, but potent!"
+            "description":"Sickly sweet, but potent!",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Eddy40",
             "pourvol":10,
             "alcvol":6,
             "sweetvol":2,
-            "description":"It's not my choice, but my hands are tied"
+            "description":"It's not my choice, but my hands are tied",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"LonGINk",
             "pourvol":10,
             "alcvol":5,
             "sweetvol":3,
-            "description":"Olympic history in a can!"
+            "description":"Olympic history in a can!",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Nasspiss Lager",
             "pourvol":10,
             "alcvol":5,
             "sweetvol":1,
-            "description":"Reinheitsgebot-compliant and pure."
+            "description":"Reinheitsgebot-compliant and pure.",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Club Soda",
             "pourvol":10,
             "alcvol":0,
             "sweetvol":0,
-            "description":"A little something, not much of anything."
+            "description":"A little something, not much of anything.",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Betel-Cola",
             "pourvol":10,
             "alcvol":0,
             "sweetvol":8,
-            "description":"Branded sugar water. It's a little sweet."
+            "description":"Branded sugar water. It's a little sweet.",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Lemon Selkie",
             "pourvol":10,
             "alcvol":0,
             "sweetvol":7,
-            "description":"Branded sugar water. It's a little sour."
+            "description":"Branded sugar water. It's a little sour.",
+            "bottle_name": "green_bottle"
         },
         {
             "name":"Burning Branch Tonic Water",
             "pourvol":10,
             "alcvol":0,
             "sweetvol":3,
-            "description":"None of that plastic bottle swill!"
+            "description":"None of that plastic bottle swill!",
+            "bottle_name": "green_bottle"
         }
     ]
 }

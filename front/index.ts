@@ -42,9 +42,17 @@ let timerStyle = new PIXI.TextStyle({
     dropShadowDistance: 6,
 });
 
+export class Game {
+    public score = 0;
+}
+
+
 function initNight() {
-    const left = new HouseMap((app.renderer.width - SEPARATOR_WIDTH) / 2, app);
-    const right = new Minigame(app.renderer.width / 2 + SEPARATOR_WIDTH / 2, (app.renderer.width - SEPARATOR_WIDTH) / 2, app);
+    const game = new Game();
+    
+    const subwindow_width = (app.renderer.width - SEPARATOR_WIDTH) / 2;
+    const left = new HouseMap(subwindow_width, app);
+    const right = new Minigame(subwindow_width + SEPARATOR_WIDTH, subwindow_width, app);
     right.position.x = app.renderer.width / 2 + SEPARATOR_WIDTH / 2;
 
     app.stage.addChild(left);
@@ -57,12 +65,21 @@ function initNight() {
     msg.position.y = 100;
     msg.anchor.x = 0.5;
 
+    const score_txt = new PIXI.Text("60", timerStyle);
+    score_txt.position.x = app.renderer.width / 2;
+    score_txt.position.y = 20;
+    score_txt.anchor.x = 0.5;
+    score_txt.text = `Score: ${game.score}`;
+
     app.stage.addChild(msg);
+    app.stage.addChild(score_txt);
 
     ticker = delta => {
         ticks += delta;
         left.tick(delta, ticks);
         right.tick(delta, ticks);
+        game.score = right.score;
+        score_txt.text = `Score: ${game.score.toFixed(0)}`;
         time -= delta / 60;
         msg.text = `${Math.round(time)}`
         if(time <= 0){
