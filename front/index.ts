@@ -27,8 +27,22 @@ divider.drawRect(app.renderer.width / 2, 0, SEPARATOR_WIDTH, app.renderer.height
 divider.endFill();
 
 let ticks = 0;
+let ticker = (delta: number) => {};
 
-function init() {
+let timerStyle = new PIXI.TextStyle({
+    fontFamily: "Arial",
+    fontSize: 70,
+    fill: "white",
+    stroke: '#ff3300',
+    strokeThickness: 4,
+    dropShadow: true,
+    dropShadowColor: "#000000",
+    dropShadowBlur: 4,
+    dropShadowAngle: Math.PI / 6,
+    dropShadowDistance: 6,
+});
+
+function initNight() {
     const left = new HouseMap((app.renderer.width - SEPARATOR_WIDTH) / 2, app);
     const right = new Minigame(app.renderer.width / 2 + SEPARATOR_WIDTH / 2, (app.renderer.width - SEPARATOR_WIDTH) / 2, app);
     right.position.x = app.renderer.width / 2 + SEPARATOR_WIDTH / 2;
@@ -37,47 +51,25 @@ function init() {
     app.stage.addChild(divider);
     app.stage.addChild(right);
 
-    let style = new PIXI.TextStyle({
-        fontFamily: "Arial",
-        fontSize: 70,
-        fill: "white",
-        stroke: '#ff3300',
-        strokeThickness: 4,
-        dropShadow: true,
-        dropShadowColor: "#000000",
-        dropShadowBlur: 4,
-        dropShadowAngle: Math.PI / 6,
-        dropShadowDistance: 6,
-    });
-    const msg = new PIXI.Text("60", style);
+    let time = 5;
+    const msg = new PIXI.Text(`${time}`, timerStyle);
     msg.position.x = app.renderer.width / 2;
     msg.position.y = 100;
     msg.anchor.x = 0.5;
 
     app.stage.addChild(msg);
 
-    let time = 30;
-
-    let gameplay = delta => {
+    ticker = delta => {
         ticks += delta;
         left.tick(delta, ticks);
         right.tick(delta, ticks);
         time -= delta / 60;
         msg.text = `${Math.round(time)}`
         if(time <= 0){
-            ticker = morning;
+            app.stage.removeChildren();
+            initMorning(left.getHistory());
         }
-    }
-
-    let morning = delta => {
-
-    }
-
-    let ticker = gameplay;
-
-    app.ticker.add(delta => {
-        ticker(delta);
-    });
+    };
 
     const player = assets.disco;
     player.loop = true;
@@ -93,6 +85,21 @@ function init() {
     player.start();
 }
 
+function initMorning(history: number[]) {
+    console.log(history);
+    let msg = new PIXI.Text(`History: ${history}`, timerStyle );
+    msg.position.x = app.renderer.width / 2;
+    msg.position.y = 100;
+    msg.anchor.x = 0.5;
+    app.stage.addChild(msg);
+    ticker = (delta: number) => {
+    };
+}
+
+app.ticker.add((delta: number) => {
+    ticker(delta);
+});
+
 loadAssets().then(_assets => {
     const div = document.createElement("div");
     div.id = "startbuttonContainer";
@@ -101,7 +108,7 @@ loadAssets().then(_assets => {
     button.textContent = "Start";
     button.onclick = () => {
         document.body.removeChild(div);
-        Tone.start().then(() => init())
+        Tone.start().then(() => initNight())
     };
     div.appendChild(button);
     document.body.appendChild(div);
