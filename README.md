@@ -4,9 +4,9 @@ Minnet
 Front:
 ```
 npm install -g parcel-bundler
-npx tsc --watch index.ts
+npm run watch-ts
 # in a separate session
-parcel index.html
+npm run watch-build
 ```
 
 Back:
