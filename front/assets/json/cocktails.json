@@ -4,20 +4,20 @@
     [
         {
             "name":"alcopop 1",
-            "pouramt":2,
+            "pour_amount":2,
             "bottles":
             [  
                 {"name":"Moskovskaya Vodka"},
                 {"name":"Betel-Cola"},
                 {"name":"Lemon Selkie"},
-                {"name":"van Betelgeuse Apple Liqueur"},
+                {"name":"van Betelgeuse apple liqueur"},
                 {"name":"van Betelgeuse strawberry liqueur"}
             ],
             "description":"Something simple that goes down easy."
         },
         {
             "name":"alcopop 2",
-            "pouramt":2,
+            "pour_amount":2,
             "bottles":
             [  
                 {"name":"Commodore Richmond's"},
@@ -31,7 +31,7 @@
         },
         {
             "name":"alcopop 3",
-            "pouramt":2,
+            "pour_amount":2,
             "bottles":
             [  
                 {"name":"Commodore Richmond's"},
@@ -44,13 +44,13 @@
         },
         {
             "name":"punch 1",
-            "pouramt":3,
+            "pour_amount":3,
             "bottles":
             [  
                 {"name":"Moskovskaya Vodka"},
                 {"name":"Commodore Richmond's"},
                 {"name":"van Betelgeuse strawberry liqueur"},
-                {"name":"van Betelgeuse Apple Liqueur"},
+                {"name":"van Betelgeuse apple liqueur"},
                 {"name":"Club Soda"},
                 {"name":"Lemon Selkie"}
             ],
@@ -58,7 +58,7 @@
         },
         {
             "name":"punch 2",
-            "pouramt":3,
+            "pour_amount":3,
             "bottles":
             [  
                 {"name":"Moskovskaya Vodka"},
@@ -71,20 +71,20 @@
         },
         {
             "name":"punch 3",
-            "pouramt":4,
+            "pour_amount":4,
             "bottles":
             [  
                 {"name":"Spiritus Fortis"},
                 {"name":"Club Soda"},
                 {"name":"Lemon Selkie"},
                 {"name":"LonGINk"},
-                {"name":"van Betelgeuse Apple Liqueur"}
+                {"name":"van Betelgeuse apple liqueur"}
             ],
             "description":"How am I supposed to bury all that?"
         },
         {
             "name":"boilermaker 1",
-            "pouramt":2,
+            "pour_amount":2,
             "bottles":
             [
                 {"name":"Nasspiss Lager"},
@@ -97,7 +97,7 @@
         },
         {
             "name":"boilermaker 2",
-            "pouramt":2,
+            "pour_amount":2,
             "bottles":
             [
                 {"name":"Nasspiss Lager"},
@@ -109,7 +109,7 @@
         },
         {
             "name":"boilermaker 3",
-            "pouramt":2,
+            "pour_amount":2,
             "bottles":
             [
                 {"name":"Nasspiss Lager"},
@@ -121,7 +121,7 @@
         },
         {
             "name":"suicide 1",
-            "pouramt":3,
+            "pour_amount":3,
             "bottles":
             [  
                 {"name":"Spiritus Fortis"},
@@ -133,24 +133,24 @@
         },
         {
             "name":"suicide 2",
-            "pouramt":3,
+            "pour_amount":3,
             "bottles":
             [  
                 {"name":"Volodymyr Fortified Wine"},
                 {"name":"Ramkwik Tonic Wine"},
                 {"name":"Eddy40"},
-                {"name":"lonGINk"}
+                {"name":"LonGINk"}
             ],
             "description":"Just.... Why?"
         },
         {
             "name":"fancy 1",
-            "pouramt":4,
+            "pour_amount":4,
             "bottles":
             [  
                 {"name":"Moskovskaya Vodka"},
                 {"name":"Commodore Richmond's"},
-                {"name":"van Betelgeuse Apple Liqueur"},
+                {"name":"van Betelgeuse apple liqueur"},
                 {"name":"van Betelgeuse strawberry liqueur"},
                 {"name":"Drammath"},
                 {"name":"Club Soda"},
@@ -161,7 +161,7 @@
         },
         {
             "name":"fancy 2",
-            "pouramt":4,
+            "pour_amount":4,
             "bottles":
             [  
                 {"name":"Green Godmother"},
@@ -175,7 +175,7 @@
         },
         {
             "name":"fancy 3",
-            "pouramt":4,
+            "pour_amount":4,
             "bottles":
             [  
                 {"name":"Commodore Richmond's"},
@@ -188,7 +188,7 @@
         },
         {
             "name":"hair of the dog",
-            "pouramt":3,
+            "pour_amount":3,
             "bottles":
             [  
                 {"name":"Green Godmother"},

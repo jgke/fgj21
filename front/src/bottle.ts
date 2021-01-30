@@ -20,11 +20,14 @@ export class Bottle extends PIXI.Sprite {
   private aim_line;
   private minigame: Minigame;
   private options;
+  private pour_amount: number = 0;
+  private poured_amount: number = 0;
 
-  constructor(minigame: Minigame, counter_height: number, counter_width: number, bottle_index: number, options) {
+  constructor(minigame: Minigame, counter_height: number, counter_width: number, bottle_index: number, pour_amount: number, options) {
     super(options.bottle_name === undefined || assets[options.bottle_name] === undefined ? assets.bottle.texture : assets[options.bottle_name].texture);
     this.minigame = minigame;
     this.options = options;
+    this.pour_amount = pour_amount;
     
     this.anchor.set(.5, 1);
     this.scale.set(.15, .15)
@@ -68,15 +71,23 @@ export class Bottle extends PIXI.Sprite {
   }
 
   public drawPourGame = (event) => {
+    if (this.pour_amount === this.poured_amount) {
+      // TODO: play sound that bottle is empty
+      return;
+    }
     if (this.gametime) {
       // Game ends
       const score = 100 - Math.abs(this.gamegauge) * 100;
       this.gametime = false;
       this.removeChildren();
       this.aim_line = undefined;
+
+      // TODO: play pour sound
+      this.poured_amount += 1;
       this.minigame.score += score;
     } else {
       // Game starts
+      // TODO? Play sound which sounds like the person is thinking?
       this.gametime = true;
       this.drawGauge(this.g_vpos, this.g_width, this.g_height);
     }

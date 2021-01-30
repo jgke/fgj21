@@ -24,6 +24,17 @@ function drunkCanvas(original: HTMLCanvasElement, width: number, height: number)
     return canvas;
 }
 
+import days from './assets/json/days.json';
+
+interface Day {
+    name: string;
+    par: number;
+    cocktails: {
+        name: string;
+    }[];
+    description: string;
+}
+
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container.
@@ -66,19 +77,26 @@ let timerStyle = new PIXI.TextStyle({
 
 export class Game {
     public score = 0;
+    public day: Day;
+
+    pickDay = (index?: number) => {
+        const d = (index === undefined ? days.days[Math.floor((days.days.length - 1) * Math.random())] : days.days[index]);
+        this.day = d;
+    }
 }
 
 
 function initNight() {
     const game = new Game();
+    game.pickDay(3);
 
     const subwindow_width = (app.renderer.width - SEPARATOR_WIDTH) / 2;
     const left = new HouseMap(subwindow_width, app);
-    const right = new Minigame(subwindow_width + SEPARATOR_WIDTH, subwindow_width, app);
+    const right = new Minigame(subwindow_width + SEPARATOR_WIDTH, subwindow_width, app, game.day.cocktails);
 
     app.stage.addChild(left, divider, right);
 
-    let time = 5;
+    let time = game.day.par * 5;
     const msg = new PIXI.Text(`${time}`, timerStyle);
     msg.position.x = app.renderer.width / 2;
     msg.position.y = 100;
@@ -86,11 +104,16 @@ function initNight() {
 
     const score_txt = new PIXI.Text("60", timerStyle);
     score_txt.position.x = app.renderer.width / 2;
-    score_txt.position.y = 20;
+    score_txt.position.y = app.renderer.height * .9;
     score_txt.anchor.x = 0.5;
     score_txt.text = `Score: ${game.score}`;
 
-    app.stage.addChild(msg, score_txt);
+    const day_txt = new PIXI.Text(`Today we have a ${game.day.name}!`, timerStyle);
+    day_txt.position.x = app.renderer.width / 2;
+    day_txt.position.y = 20;
+    day_txt.anchor.x = 0.5;
+
+    app.stage.addChild(msg, score_txt, day_txt);
 
     ticker = delta => {
         ticks += delta;

@@ -5,6 +5,16 @@ import { Bottle } from './bottle';
 import { GameObject } from './GameObject';
 
 import bottles from '../assets/json/bottles.json';
+import all_cocktails from '../assets/json/cocktails.json';
+
+interface Cocktail {
+    name: string;
+    pour_amount: number;
+    bottles: {
+        name: string;
+    }[];
+    description: string;
+}
 
 // from https://javascript.info/array-methods#shuffle-an-array
 // Better than sorting with Math.random because Math.random is biased.
@@ -14,16 +24,19 @@ function shuffle<T extends Array<any>>(array: T): T {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
-  }
+}
 
 export class Minigame extends GameObject {
     public score = 0;
-    private bottles: Bottle[] = [];
-    public current_drink: Bottle[] =[];
+    private bottles: Bottle[][] = [];
+    public current_drink: Bottle[] = [];
+    private todays_cocktails: Cocktail[] = [];
     // private pressed_keys: PressedKeys;
     // private ticks: number = 0;
 
-    constructor(x: number, width: number, app: PIXI.Application) {
+    flattened_bottles = () => { return [].concat(...this.bottles); }
+
+    constructor(x: number, width: number, app: PIXI.Application, cocktails: { name: string }[]) {
         super();
 
         this.position.x = x;
@@ -40,15 +53,26 @@ export class Minigame extends GameObject {
         counter.scale.set(scale, scale);
         baari_shading.scale.set(scale, scale);
 
-        this.addChild(background, counter); 
+        this.addChild(background, counter);
 
-        this.bottles = shuffle(bottles.bottles).map((b, i) => new Bottle(this, counter_height, this.width, i, b));
-        this.addChild(...this.bottles)
+        const todays_cocktail_names = cocktails.map(c => c.name);
+
+        all_cocktails.cocktails.forEach(c => { if (todays_cocktail_names.includes(c.name)) this.todays_cocktails.push(c); });
+
+        const bottle_dictionary = bottles.bottles.reduce((a, bottle) => ({ ...a, [bottle.name]: bottle }), {})
+
+        let i = 0;
+        this.bottles = (this.todays_cocktails.map(c => {
+            const tmp = c.bottles.map(b => bottle_dictionary[b.name]);
+            return tmp.map(b => new Bottle(this, counter_height, this.width * .8, i++, c.pour_amount, b))
+        }));
+
+        this.addChild(...this.flattened_bottles());
 
         this.addChild(baari_shading);
     }
-    
+
     public tick(delta: number, ticks: number) {
-        this.bottles.forEach(b => b.updateGame(ticks));
+        this.flattened_bottles().forEach(b => b.updateGame(ticks));
     }
 }
