@@ -4,7 +4,7 @@ import { showDrunk } from './drunkCanvas';
 import { Minigame } from './minigame';
 import { bottleStyle } from './styles';
 
-interface BottleOptions {
+export interface BottleOptions {
   name: string;
   shortname: string;
   pourvol: number;
@@ -16,12 +16,13 @@ interface BottleOptions {
 
 export class Bottle extends PIXI.Sprite {
   gametime = false;
-  gamegauge = 0;
-  gamegaugespeed = 20;
-  private g_vpos;
-  private g_width;
-  private g_height;
-  private aim_line;
+  gauge: PIXI.Graphics;
+  gauge_value = 0;
+  gauge_speed = 20;
+  private g_vpos: number;
+  private g_width: number;
+  private g_height: number;
+  private aim_line: PIXI.Graphics;
   private minigame: Minigame;
   private options: BottleOptions;
 
@@ -33,53 +34,58 @@ export class Bottle extends PIXI.Sprite {
     this.anchor.set(.5, 1);
     [this.x, this.y] = [x, 0];
     
-    this.g_vpos = -this.height * .7 / this.scale.y;
-    this.g_width = this.width / 2 * 1.5 / this.scale.x;
-    this.g_height = this.height / 10 / this.scale.y;
+    this.g_vpos = -this.height * .7;
+    this.g_width = this.width / 2 * 1.5;
+    this.g_height = this.height / 10;
     
     this.interactive = true;
     this.on('mousedown', this.drawPourGame);
+
+    this.scale.set(.15, .15)
     
-    const bottle_text = `${this.options.shortname}\n${this.options.pourvol} ${this.options.alcvol} ${this.options.sweetvol}`;
+    const bottle_text = `${this.options.shortname}\n${this.options.pourvol}cl ${this.options.alcvol}g ${this.options.sweetvol}g`;
     const name = new PIXI.Text(bottle_text, bottleStyle);
     name.anchor.x = .5;
     name.position.y = 10;
 
-    this.scale.set(.15, .15)
     this.addChild(name);
   }
 
   updateGame(tick: number) {
     if (this.gametime) {
-      this.gamegauge = Math.asin(Math.cos(tick / 2 * this.gamegaugespeed / 100)) / 2;
-      // console.log(this.gamegauge);
-      const aim_line_pos = this.gamegauge * this.g_width;
+      this.gauge_value = Math.asin(Math.cos(tick / 2 * this.gauge_speed / 100)) / 2;
+      const aim_line_pos = this.gauge_value * this.g_width;
       if (this.aim_line === undefined) {
-        this.aim_line = new PIXI.Graphics().lineStyle(10, 0xFF0000, 1).moveTo(aim_line_pos, this.g_vpos - this.g_height).lineTo(aim_line_pos, this.g_vpos + this.g_height);
-        this.addChild(this.aim_line);
+        this.aim_line = new PIXI.Graphics()
+        this.gauge = new PIXI.Graphics()
+        this.drawGauge(this.g_vpos, this.g_width, this.g_height);
+        this.addChild(this.gauge, this.aim_line);
       } else {
         this.aim_line.clear();
-        this.aim_line.lineStyle(10, 0xFF0000, 1).moveTo(aim_line_pos, this.g_vpos - this.g_height / 2).lineTo(aim_line_pos, this.g_vpos + this.g_height / 2);
       }
+      this.drawAimLine(aim_line_pos);
     }
   }
 
-  drawGauge = (g_vpos: number, g_width: number, g_height: number) => {
-    console.log("draw gauge on bottle");
-    const gauge = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(-g_width, g_vpos).lineTo(g_width, g_vpos);
-    const center = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(0, g_vpos - g_height / 2).lineTo(0, g_vpos + g_height / 2);
-    const left = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(-g_width, g_vpos - g_height).lineTo(-g_width, g_vpos + g_height);
-    const right = new PIXI.Graphics().lineStyle(5, 0xFFFFFF, 1).moveTo(g_width, g_vpos - g_height).lineTo(g_width, g_vpos + g_height);
-    this.addChild(gauge, center, left, right);
+  private drawAimLine = (pos: number) => {
+    this.aim_line.lineStyle(10, 0xFF0000, 1).moveTo(pos, this.g_vpos - this.g_height / 2).lineTo(pos, this.g_vpos + this.g_height / 2);
   }
 
-  public drawPourGame = (event) => {
+  private drawGauge = (g_vpos: number, g_width: number, g_height: number) => {
+    console.log("draw gauge on bottle");
+    this.gauge = new PIXI.Graphics()
+      .lineStyle(5, 0xFFFFFF, 1).moveTo(-g_width, g_vpos).lineTo(g_width, g_vpos)
+      .moveTo(0, g_vpos - g_height / 2).lineTo(0, g_vpos + g_height / 2)
+      .moveTo(-g_width, g_vpos - g_height).lineTo(-g_width, g_vpos + g_height)
+      .moveTo(g_width, g_vpos - g_height).lineTo(g_width, g_vpos + g_height);
+  }
+
+  private drawPourGame = (event) => {
     if (this.gametime) {
       // Game ends
-      const score = 100 - Math.abs(this.gamegauge) * 100;
+      const score = 100 - Math.abs(this.gauge_value) * 100;
       this.gametime = false;
-      this.removeChildren();
-      this.aim_line = undefined;
+      this.aim_line.clear();
 
       // TODO: play pour sound
       this.minigame.pour(score);

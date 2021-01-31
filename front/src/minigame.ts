@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import * as Tone from 'tone';
 import { assets } from './assets';
-import { Bottle } from './bottle';
+import { Bottle, BottleOptions } from './bottle';
 import { GameObject } from './GameObject';
 
 import bottles from '../assets/json/bottles.json';
@@ -26,7 +26,7 @@ export class Minigame extends GameObject {
     private poured_amount = 0;
     private bottle_container = new PIXI.Container();
     private cocktail_dictionary: { [index: string]: Cocktail };
-    private bottle_dictionary: { [index: string]: Bottle };
+    private bottle_dictionary: { [index: string]: BottleOptions };
     private counter_height: number;
 
     public getScore = () => { return this.score; }
@@ -81,12 +81,17 @@ export class Minigame extends GameObject {
 
         let i = 0;
         // TODO: shuffle here?
-        const bottles = (cocktail.bottles.map(b => this.bottle_dictionary[b.name]));
-        // this.bottles = bottles.map(b => new Bottle(this, 100 + 300 * (i), b));
-        this.bottles = bottles.map(b => new Bottle(this, 50 * (i++) + 5 * Math.sin(i * 93879823.234), b));
+        const bottles = shuffle(cocktail.bottles.map(b => this.bottle_dictionary[b.name]));
 
-        console.log(`Cocktail number ${this.current_cocktail}: ${cocktail.name} with ${bottles.length} bottles. Available pours: ${this.pour_amount}`);
-        this.bottle_container.addChild(...this.bottles);
+        if (bottles.includes(undefined)) {
+            console.log("Cocktail is broken! Check that the bottle names are exactly as written in bottles.json");
+        } else {
+            // this.bottles = bottles.map(b => new Bottle(this, 100 + 300 * (i), b));
+            this.bottles = bottles.map(b => new Bottle(this, 50 * (i++) + 5 * Math.sin(i * 93879823.234), b));
+    
+            console.log(`Cocktail number ${this.current_cocktail}: ${cocktail.name} with ${bottles.length} bottles. Available pours: ${this.pour_amount}`);
+            this.bottle_container.addChild(...this.bottles);
+        }
     }
 
     public pour = (score: number) => {
