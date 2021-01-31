@@ -150,6 +150,18 @@ export class Minigame extends GameObject {
             this.current_pours.push(pour);
         }
         if (this.poured_amount >= this.pour_amount) {
+            console.log(this.current_pours);
+            // Cocktail finished, calculate its score
+            const score = this.current_pours.reduce((a, p) => {
+                a.alcopoints += p.pourvol * p.alcvol * p.accuracy;
+                a.sweetpoints += p.pourvol * p.sweetvol * p.accuracy;
+                return a;
+            }, {alcopoints: 0, sweetpoints: 0});
+            const final_score = Math.abs(score.alcopoints * 2 / score.sweetpoints);
+
+            this.score += final_score;
+
+            // Advance to next cocktail
             this.current_cocktail += 1;
             this.poured_amount = 0;
             this.updateBottles();
