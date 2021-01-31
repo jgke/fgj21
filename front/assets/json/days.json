@@ -62,7 +62,7 @@
         "par": 11,
         "cocktails":
         [
-             {"name":"punch2"},  
+             {"name":"punch 2"},  
              {"name":"fancy 1"},  
              {"name":"fancy 2"}
         ],
@@ -73,7 +73,6 @@
         "par":120,
         "cocktails":
         [
-            {"name":"hair of the dog"},  
             {"name":"boilermaker 3"},  
             {"name":"boilermaker 1"}
         ],

@@ -123,6 +123,7 @@ export class Minigame extends GameObject {
         this.destroyBottles();
         if (this.current_cocktail < this.todays_cocktails.length) {
             const cocktail = this.cocktail_dictionary[this.todays_cocktails[this.current_cocktail]]
+            console.log(`Cocktail number ${this.current_cocktail}, name '${this.todays_cocktails[this.current_cocktail]}'.`);
             this.pour_amount = cocktail.pour_amount;
     
             let i = 0;
@@ -138,7 +139,7 @@ export class Minigame extends GameObject {
                     this.bottle_text.text = b.description;
                 }));
     
-                console.log(`Cocktail number ${this.current_cocktail}: ${cocktail.name} with ${bottles.length} bottles. Available pours: ${this.pour_amount}`);
+                console.log(`There is ${bottles.length} different bottles avaulable and ${this.pour_amount} pours.`);
                 this.bottle_container.addChild(...this.bottles);
             }            
         } else {
@@ -147,11 +148,12 @@ export class Minigame extends GameObject {
     }
 
     public pour = (pour: Pour) => {
-        this.showScoreText(pour.judgement);
+        let feedback_txt;
         if (this.poured_amount < this.pour_amount) {
             // this.score += pour.score || 0;
             this.poured_amount += 1;
             this.current_pours.push(pour);
+            feedback_txt = pour.judgement;
         }
         if (this.poured_amount >= this.pour_amount) {
             console.log(this.current_pours);
@@ -171,6 +173,7 @@ export class Minigame extends GameObject {
             this.poured_amount = 0;
             this.updateBottles();
         }
+        this.showScoreText(feedback_txt);
     }
 
     public tick(delta: number, ticks: number) {
