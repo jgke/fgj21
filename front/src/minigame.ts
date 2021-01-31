@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import * as Tone from 'tone';
 import { assets } from './assets';
-import { Bottle, BottleOptions } from './bottle';
+import { Bottle, BottleOptions, Pour } from './bottle';
 import { GameObject } from './GameObject';
 
 import bottles from '../assets/json/bottles.json';
@@ -25,6 +25,7 @@ export class Minigame extends GameObject {
     private current_cocktail = 0;
     private pour_amount = 0;
     private poured_amount = 0;
+    private current_pours: Pour[] = [];
     private bar_container: PIXI.Sprite;
     private bottle_container = new PIXI.Container();
     private cocktail_dictionary: { [index: string]: Cocktail };
@@ -43,32 +44,32 @@ export class Minigame extends GameObject {
         this.mask = minigame_mask;
 
         this.bar_container = new MovableSprite(assets.baari_bg.texture);
-        
-        this.counter_height = this.bar_container.height *.55;
+
+        this.counter_height = this.bar_container.height * .55;
         const counter = new PIXI.Sprite(assets.counter.texture);
         counter.y = this.counter_height;
         const bar_lighting = new PIXI.Sprite(assets.baari_shading.texture);
-        
+
         this.bar_container.addChild(counter)
-        
+
         // all_cocktails.cocktails.forEach(c => { if (todays_cocktail_names.includes(c.name)) this.todays_cocktails.push(c); });
         this.todays_cocktails = cocktails.map(c => c.name);
         this.bottle_dictionary = bottles.bottles
-        .reduce((a, bottle) => ({ ...a, [bottle.name]: bottle }), {})
+            .reduce((a, bottle) => ({ ...a, [bottle.name]: bottle }), {})
         this.cocktail_dictionary = all_cocktails.cocktails
-        .reduce((a, cocktail) => ({ ...a, [cocktail.name]: cocktail }), {})
+            .reduce((a, cocktail) => ({ ...a, [cocktail.name]: cocktail }), {})
         this.updateBottles();
-        
+
         this.bottle_container.y = this.counter_height;
         // Bottles start rendering on the counter from this x position
         this.bottle_container.x = width * .3;
         this.bottle_container.interactiveChildren = true;
         this.bar_container.addChild(this.bottle_container);
-        
+
         this.bar_container.addChild(bar_lighting);
-        
+
         const laatikko = new PIXI.Container();
-        
+
         this.bottle_name = this.bottleText(width, app.renderer.height, 1);
         this.bottle_text = this.bottleText(width, app.renderer.height, 0);
 
@@ -76,7 +77,7 @@ export class Minigame extends GameObject {
         this.bar_container.scale.set(scale, scale);
         this.addChild(this.bar_container);
     }
-    
+
     private bottleText(width: number, height: number, y: number): PIXI.Text {
         const fontSize = 30;
         const text = new PIXI.Text("", {
@@ -93,15 +94,15 @@ export class Minigame extends GameObject {
         return text;
     }
 
-    private showScoreText(score: number): PIXI.Text {
+    private showScoreText(score: string): PIXI.Text {
         console.log(score);
-        const text = new PIXI.Text(`+${Math.round(score)}`, {
+        const text = new PIXI.Text(`${score}`, {
             fontFamily: "Arial",
             fontSize: 50,
             fill: "white",
             stroke: '#000000',
         });
-        text.anchor.x = 1;
+        text.anchor.x = 0;
         text.anchor.y = 1;
         text.x = 100;
         text.y = this.bottle_name.y - 100;
@@ -141,11 +142,12 @@ export class Minigame extends GameObject {
         }
     }
 
-    public pour = (score: number) => {
-        this.showScoreText(score);
+    public pour = (pour: Pour) => {
+        this.showScoreText(pour.judgement);
         if (this.poured_amount < this.pour_amount) {
-            this.score += score;
+            this.score += pour.score || 0;
             this.poured_amount += 1;
+            this.current_pours.push(pour);
         }
         if (this.poured_amount >= this.pour_amount) {
             this.current_cocktail += 1;

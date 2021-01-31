@@ -14,6 +14,15 @@ export interface BottleOptions {
   bottle_name: string;
 }
 
+export interface Pour {
+  pourvol: number;
+  alcvol: number;
+  sweetvol: number;
+  accuracy: number;
+  score?: number;
+  judgement?: string;
+}
+
 export class Bottle extends PIXI.Sprite {
   gametime = false;
   gauge: PIXI.Graphics;
@@ -84,11 +93,30 @@ export class Bottle extends PIXI.Sprite {
     if (this.gametime) {
       // Game ends
       const score = 100 - Math.abs(this.gauge_value) * 100;
+      let judgement;
+      if (this.gauge_value < .3) {
+        judgement = "Poor";
+      } 
+      else if (this.gauge_value < .6) {
+        judgement = "Decent";
+      }
+      else if (this.gauge_value < .9) {
+        judgement = "Great!";
+      } else {
+        judgement = "Excellent!";
+      }
+      const pour: Pour = {
+        pourvol: this.options.pourvol,
+        alcvol: this.options.alcvol,
+        sweetvol: this.options.sweetvol,
+        accuracy: this.gauge_value,
+        judgement: judgement,
+      }
       this.gametime = false;
       this.aim_line.clear();
 
       // TODO: play pour sound
-      this.minigame.pour(score);
+      this.minigame.pour(pour);
     } else {
       // Game starts
       // TODO? Play sound which sounds like the person is thinking?
