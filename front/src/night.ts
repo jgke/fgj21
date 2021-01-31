@@ -67,7 +67,7 @@ export function initNight(app: PIXI.Application, initMorning: (_: string[]) => v
     score_txt.anchor.x = 0.5;
     score_txt.text = `Score: ${game.score}`;
 
-    const day_txt = new PIXI.Text(`Today we have a ${game.day.name}!`, timerStyle);
+    const day_txt = new PIXI.Text(`${game.day.name}`, timerStyle);
     day_txt.position.x = app.renderer.width / 2;
     day_txt.position.y = 20;
     day_txt.anchor.x = 0.5;
