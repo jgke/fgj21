@@ -28,6 +28,8 @@ export class Minigame extends GameObject {
     private cocktail_dictionary: { [index: string]: Cocktail };
     private bottle_dictionary: { [index: string]: BottleOptions };
     private counter_height: number;
+    private bottle_name: PIXI.Text;
+    private bottle_text: PIXI.Text;
 
     public getScore = () => { return this.score; }
 
@@ -64,6 +66,27 @@ export class Minigame extends GameObject {
         this.addChild(this.bottle_container);
 
         this.addChild(baari_shading);
+
+        const laatikko = new PIXI.Container();
+
+        this.bottle_name = this.bottleText(width, app.renderer.height, 1);
+        this.bottle_text = this.bottleText(width, app.renderer.height, 0);
+    }
+
+    private bottleText(width: number, height: number, y: number): PIXI.Text {
+        const fontSize = 30;
+        const text = new PIXI.Text("", {
+            fontFamily: "Arial",
+            fontSize: fontSize,
+            fill: "white",
+            stroke: '#000000',
+        });
+        text.anchor.x = 1;
+        text.anchor.y = 1;
+        text.x = width;
+        text.y = height - 50 * y;
+        this.addChild(text);
+        return text;
     }
 
     private destroyBottles = () => {
@@ -87,7 +110,10 @@ export class Minigame extends GameObject {
             console.log("Cocktail is broken! Check that the bottle names are exactly as written in bottles.json");
         } else {
             // this.bottles = bottles.map(b => new Bottle(this, 100 + 300 * (i), b));
-            this.bottles = bottles.map(b => new Bottle(this, 50 * (i++) + 5 * Math.sin(i * 93879823.234), b));
+            this.bottles = bottles.map(b => new Bottle(this, 50 * (i++) + 5 * Math.sin(i * 93879823.234), b, (_: any) => {
+            this.bottle_name.text = `${b.name} (${b.alcvol}%)`;
+            this.bottle_text.text = b.description;
+        }));
     
             console.log(`Cocktail number ${this.current_cocktail}: ${cocktail.name} with ${bottles.length} bottles. Available pours: ${this.pour_amount}`);
             this.bottle_container.addChild(...this.bottles);
