@@ -89,6 +89,23 @@ export class Minigame extends GameObject {
         return text;
     }
 
+    private showScoreText(score: number): PIXI.Text {
+        console.log(score);
+        const text = new PIXI.Text(`+${Math.round(score)}`, {
+            fontFamily: "Arial",
+            fontSize: 50,
+            fill: "white",
+            stroke: '#000000',
+        });
+        text.anchor.x = 1;
+        text.anchor.y = 1;
+        text.x = 100;
+        text.y = this.bottle_name.y - 100;
+        this.addChild(text);
+        setTimeout(() => this.removeChild(text), 500);
+        return text;
+    }
+
     private destroyBottles = () => {
         console.log("Destroying bottles! (╯°□°）╯︵ ┻━┻")
         this.bottles.forEach(b => b.destroy())
@@ -121,6 +138,7 @@ export class Minigame extends GameObject {
     }
 
     public pour = (score: number) => {
+        this.showScoreText(score);
         if (this.poured_amount < this.pour_amount) {
             this.score += score;
             this.poured_amount += 1;
