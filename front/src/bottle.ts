@@ -65,7 +65,7 @@ export class Bottle extends PIXI.Sprite {
 
   updateGame(tick: number) {
     if (this.gametime) {
-      this.gauge_value = Math.asin(Math.cos(tick / 2 * this.gauge_speed / 100)) / 2;
+      this.gauge_value = Math.asin(Math.cos(tick / 2 * this.gauge_speed / 100)) / (Math.PI / 2);
       const aim_line_pos = this.gauge_value * this.g_width;
       this.aim_line.clear();
       this.drawAimLine(aim_line_pos);
@@ -87,15 +87,15 @@ export class Bottle extends PIXI.Sprite {
   private togglePourGame = (event) => {
     if (this.gametime) {
       // Game ends
-      const score = 100 - Math.abs(this.gauge_value) * 100;
+      const accuracy = Math.round(100 - Math.abs(this.gauge_value) * 100);
       let judgement;
-      if (this.gauge_value < .3) {
+      if (accuracy < 30) {
         judgement = "Poor";
       } 
-      else if (this.gauge_value < .6) {
+      else if (accuracy < 60) {
         judgement = "Decent";
       }
-      else if (this.gauge_value < .9) {
+      else if (accuracy < 90) {
         judgement = "Great!";
       } else {
         judgement = "Excellent!";
@@ -104,7 +104,7 @@ export class Bottle extends PIXI.Sprite {
         pourvol: this.options.pourvol,
         alcvol: this.options.alcvol,
         sweetvol: this.options.sweetvol,
-        accuracy: this.gauge_value,
+        accuracy: accuracy / 100,
         judgement: judgement,
       }
       this.gametime = false;
