@@ -35,6 +35,7 @@ export class Minigame extends GameObject {
     private bottle_text: PIXI.Text;
 
     public getScore = () => { return this.score; }
+    public addScore = (score: number) => this.score += score;
 
     constructor(x: number, width: number, app: PIXI.Application, cocktails: { name: string }[]) {
         super();
@@ -148,7 +149,7 @@ export class Minigame extends GameObject {
     public pour = (pour: Pour) => {
         this.showScoreText(pour.judgement);
         if (this.poured_amount < this.pour_amount) {
-            this.score += pour.score || 0;
+            // this.score += pour.score || 0;
             this.poured_amount += 1;
             this.current_pours.push(pour);
         }
@@ -165,6 +166,7 @@ export class Minigame extends GameObject {
             this.score += final_score;
 
             // Advance to next cocktail
+            this.current_pours = [];
             this.current_cocktail += 1;
             this.poured_amount = 0;
             this.updateBottles();
