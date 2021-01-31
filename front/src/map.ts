@@ -69,6 +69,7 @@ export class HouseMap extends GameObject {
         12: [19],
         13: [11, 14, 16, 18],
         14: [13, 15],
+        15: [14],
         16: [13, 17],
         17: [16],
         18: [13],
@@ -165,13 +166,13 @@ export class HouseMap extends GameObject {
 
         }
 
-        // for (let a = 0; a < this.hotspots.length; a++) {
-        //     for (let b = 0; b < this.hotspots.length; b++) {
-        //         if (this.findRoute(a, b, {}) === undefined) {
-        //             console.warn("Could not find route from", a, "to", b);
-        //         }
-        //     }
-        // }
+        for (let a = 0; a < this.hotspots.length; a++) {
+            for (let b = 0; b < this.hotspots.length; b++) {
+                if (this.findRoute(a, b, {}) === undefined) {
+                    console.warn("Could not find route from", a, "to", b);
+                }
+            }
+        }
     }
 
     private findRoute(from: number, to: number, used: any): number[] {
