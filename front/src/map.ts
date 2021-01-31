@@ -78,7 +78,7 @@ export class HouseMap extends GameObject {
         21: [11]
     };
 
-    private targets = [0, 3, 5, 6, 9, 10, 11, 12, 14, 17, 18];
+    private targets = [0, 3, 5, 6, 9, 10, 12, 14, 17, 18];
 
     private targetNames = {
         0: "Kitchen",
@@ -87,7 +87,6 @@ export class HouseMap extends GameObject {
         6: "Entry Hall",
         9: "Servant's Bathroom",
         10: "Servant's Room",
-        11: "Foyer",
         12: "Parlor",
         15: "Boudoir",
         17: "Master Bedroom",
