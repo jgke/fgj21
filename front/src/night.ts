@@ -41,7 +41,7 @@ export class Game {
 
 export function initNight(app: PIXI.Application, initMorning: (_: string[]) => void) {
     const game = new Game();
-    game.pickDay(3);
+    game.pickDay();
 
     const subwindow_width = (app.renderer.width - SEPARATOR_WIDTH) / 2;
     const left = new HouseMap(subwindow_width, app);
@@ -55,7 +55,7 @@ export function initNight(app: PIXI.Application, initMorning: (_: string[]) => v
 
     app.stage.addChild(left, divider, right);
 
-    let time = game.day.par * 5;
+    let time = game.day.par;
     const msg = new PIXI.Text(`${time}`, timerStyle);
     msg.position.x = app.renderer.width / 2;
     msg.position.y = 100;
