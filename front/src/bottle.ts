@@ -23,9 +23,9 @@ export class Bottle extends PIXI.Sprite {
   private g_height;
   private aim_line;
   private minigame: Minigame;
-  private options;
+  private options: BottleOptions;
 
-  constructor(minigame: Minigame, x: number, options) {
+  constructor(minigame: Minigame, x: number, options: BottleOptions) {
     super(options.bottle_name === undefined || assets[options.bottle_name] === undefined ? assets.bottle.texture : assets[options.bottle_name].texture);
     this.minigame = minigame;
     this.options = options;
@@ -40,11 +40,10 @@ export class Bottle extends PIXI.Sprite {
     this.interactive = true;
     this.on('mousedown', this.drawPourGame);
     
-    const name = new PIXI.Text(`${this.options.shortname}`, bottleStyle);
+    const bottle_text = `${this.options.shortname}\n${this.options.pourvol} ${this.options.alcvol} ${this.options.sweetvol}`;
+    const name = new PIXI.Text(bottle_text, bottleStyle);
     name.anchor.x = .5;
-    name.position.x = this.x;
-    name.position.y = this.y - 50;
-    console.log(`Bottle ${options.name} position x: ${this.x}, y: ${this.y}`);
+    name.position.y = 10;
 
     this.scale.set(.15, .15)
     this.addChild(name);

@@ -19,4 +19,5 @@ export const bottleStyle = new PIXI.TextStyle({
     fill: "white",
     stroke: '#000000',
     strokeThickness: 1,
+    align : 'center',
   });
