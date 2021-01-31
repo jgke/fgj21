@@ -110,11 +110,11 @@ export class Minigame extends GameObject {
             console.log("Cocktail is broken! Check that the bottle names are exactly as written in bottles.json");
         } else {
             // this.bottles = bottles.map(b => new Bottle(this, 100 + 300 * (i), b));
-            this.bottles = bottles.map(b => new Bottle(this, 50 * (i++) + 5 * Math.sin(i * 93879823.234), b, (_: any) => {
-            this.bottle_name.text = `${b.name} (${b.alcvol}%)`;
-            this.bottle_text.text = b.description;
-        }));
-    
+            this.bottles = bottles.map(b => new Bottle(this, 80 * (i++) + 5 * Math.sin(i * 93879823.234), b, (_: any) => {
+                this.bottle_name.text = `${b.name} (${b.alcvol}%)`;
+                this.bottle_text.text = b.description;
+            }));
+
             console.log(`Cocktail number ${this.current_cocktail}: ${cocktail.name} with ${bottles.length} bottles. Available pours: ${this.pour_amount}`);
             this.bottle_container.addChild(...this.bottles);
         }
@@ -124,7 +124,7 @@ export class Minigame extends GameObject {
         if (this.poured_amount < this.pour_amount) {
             this.score += score;
             this.poured_amount += 1;
-        } 
+        }
         if (this.poured_amount >= this.pour_amount) {
             this.current_cocktail += 1;
             this.poured_amount = 0;

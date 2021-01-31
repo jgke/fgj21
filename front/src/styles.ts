@@ -15,7 +15,7 @@ export const timerStyle = new PIXI.TextStyle({
 
 export const bottleStyle = new PIXI.TextStyle({
     fontFamily: "Comic Sans MS",
-    fontSize: 40,
+    fontSize: 80,
     fill: "white",
     stroke: '#000000',
     strokeThickness: 1,
