@@ -113,7 +113,7 @@ export function initMorning(history: string[], initNext: (percentage: number) =>
             secondContainer.id = "retraceList"
             const continueButton = document.createElement("button");
             continueButton.id = "continueButton";
-            continueButton.textContent = `You got ${Math.round(100 * percentage)}% correctly`;
+            continueButton.textContent = `You got ${Math.round(100 * percentage)}% correct`;
             continueButton.onclick = () => {
                 document.body.removeChild(secondContainer);
                 initNext(Math.round(100 * percentage));

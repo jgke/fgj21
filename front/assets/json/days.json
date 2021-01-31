@@ -37,7 +37,7 @@
     },
     {
         "name":"Boys' Night",
-        "par": 12,
+        "par": 120,
         "cocktails":
         [
              {"name":"alcopop 1"},  
@@ -59,7 +59,7 @@
     },
     {
         "name":"Family Gathering",
-        "par": 11,
+        "par": 110,
         "cocktails":
         [
              {"name":"punch 2"},  
