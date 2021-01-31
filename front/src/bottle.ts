@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { assets } from './assets';
+import { showDrunk } from './drunkCanvas';
 import { Minigame } from './minigame';
 
 let bottleStyle = new PIXI.TextStyle({
@@ -85,6 +86,9 @@ export class Bottle extends PIXI.Sprite {
       // TODO: play pour sound
       this.poured_amount += 1;
       this.minigame.score += score;
+      if(score > 50) {
+        showDrunk();
+      }
     } else {
       // Game starts
       // TODO? Play sound which sounds like the person is thinking?

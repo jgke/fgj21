@@ -51,12 +51,11 @@ div#retraceList>ol>li>button {
 
 .drunkContainer {
     position: absolute;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    animation-name: rotate;
-    animation-duration: 5s;
-    top: 50px;
-    left: 50px;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
 }
 
 @keyframes orbit {
@@ -74,6 +73,11 @@ div#retraceList>ol>li>button {
     animation: rotate 3s linear infinite;
     opacity: 0.7;
     overflow: hidden;
+    display: none;
+}
+
+.showDrunkCanvas {
+    display: block;
 }
 
 @keyframes rotate {

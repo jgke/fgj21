@@ -8,23 +8,8 @@ import { Minigame } from './src/minigame';
 import * as Tone from 'tone';
 import { distance } from './src/distance';
 
-function drunkCanvas(original: HTMLCanvasElement, width: number, height: number) {
-    const canvas = document.createElement("canvas");
-    canvas.className = "drunkCanvas"
-    canvas.width = width;
-    canvas.height = height;
-    let ctx = canvas.getContext("2d");
-
-    window.setInterval(
-        _ => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(original, 0, 0);
-        }, 1000 / 60)
-
-    return canvas;
-}
-
 import days from './assets/json/days.json';
+import { drunkCanvas, hideDrunk } from './src/drunkCanvas';
 
 interface Day {
     name: string;
@@ -49,10 +34,10 @@ app.renderer.resize(window.innerWidth, window.innerHeight);
 // can then insert into the DOM.
 document.body.appendChild(app.view);
 let drunkContainer = document.createElement("div");
-drunkContainer.className = "drunkContainer;"
+drunkContainer.className = "drunkContainer";
 let drunk = drunkCanvas(app.view, window.innerWidth, window.innerHeight);
-//drunkContainer.appendChild(drunk);
-//document.body.appendChild(drunk);
+drunkContainer.appendChild(drunk);
+document.body.appendChild(drunkContainer);
 
 const divider = new PIXI.Graphics();
 divider.beginFill(0xFF0000);
@@ -181,6 +166,7 @@ function shuffle<T>(arr: T[]) {
 }
 
 function initMorning(history: string[]) {
+    hideDrunk();
     let start = history[0];
     let end = history[history.length - 1];
     let middle = history.slice(1, history.length - 1);
