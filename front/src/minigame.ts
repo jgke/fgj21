@@ -120,25 +120,28 @@ export class Minigame extends GameObject {
 
     private updateBottles = () => {
         this.destroyBottles();
-
-        const cocktail = this.cocktail_dictionary[this.todays_cocktails[this.current_cocktail]]
-        this.pour_amount = cocktail.pour_amount;
-
-        let i = 0;
-        // TODO: shuffle here?
-        const bottles = shuffle(cocktail.bottles.map(b => this.bottle_dictionary[b.name]));
-
-        if (bottles.includes(undefined)) {
-            console.log("Cocktail is broken! Check that the bottle names are exactly as written in bottles.json");
+        if (this.current_cocktail < this.todays_cocktails.length) {
+            const cocktail = this.cocktail_dictionary[this.todays_cocktails[this.current_cocktail]]
+            this.pour_amount = cocktail.pour_amount;
+    
+            let i = 0;
+            // TODO: shuffle here?
+            const bottles = shuffle(cocktail.bottles.map(b => this.bottle_dictionary[b.name]));
+    
+            if (bottles.includes(undefined)) {
+                console.log("Cocktail is broken! Check that the bottle names are exactly as written in bottles.json");
+            } else {
+                // this.bottles = bottles.map(b => new Bottle(this, 100 + 300 * (i), b));
+                this.bottles = bottles.map(b => new Bottle(this, 100 * (i++) + 5 * Math.sin(i * 93879823.234), b, (_: any) => {
+                    this.bottle_name.text = `${b.name} (${b.alcvol}%)`;
+                    this.bottle_text.text = b.description;
+                }));
+    
+                console.log(`Cocktail number ${this.current_cocktail}: ${cocktail.name} with ${bottles.length} bottles. Available pours: ${this.pour_amount}`);
+                this.bottle_container.addChild(...this.bottles);
+            }            
         } else {
-            // this.bottles = bottles.map(b => new Bottle(this, 100 + 300 * (i), b));
-            this.bottles = bottles.map(b => new Bottle(this, 100 * (i++) + 5 * Math.sin(i * 93879823.234), b, (_: any) => {
-                this.bottle_name.text = `${b.name} (${b.alcvol}%)`;
-                this.bottle_text.text = b.description;
-            }));
-
-            console.log(`Cocktail number ${this.current_cocktail}: ${cocktail.name} with ${bottles.length} bottles. Available pours: ${this.pour_amount}`);
-            this.bottle_container.addChild(...this.bottles);
+            console.log("You have been served enoug.")
         }
     }
 
