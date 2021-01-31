@@ -25,6 +25,19 @@ export class MovableSprite extends PIXI.Sprite {
     // events for drag move
     this.on('mousemove', this.onDragMove)
     this.on('touchmove', this.onDragMove);
+    this.on('scroll', this.zoom);
+  }
+
+  private zoom = (event: any) => {
+    // const wheel_pos_x = event.screenX / 2 - event.x;
+    // const wheel_pos_y = event.y / event.screenY;
+    // console.log(event, wheel_pos_y);
+    // this.anchor.x = .5;
+    // this.anchor.y = .5;
+    // this.anchor.set();
+    console.log("ZOOM!", event.wheelDelta);
+    this.scale.x += event.wheelDelta / 1000;
+    this.scale.y += event.wheelDelta / 1000;
   }
 
   private onDragStart = (event) => {

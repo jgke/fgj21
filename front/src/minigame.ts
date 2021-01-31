@@ -72,7 +72,7 @@ export class Minigame extends GameObject {
         this.bottle_name = this.bottleText(width, app.renderer.height, 1);
         this.bottle_text = this.bottleText(width, app.renderer.height, 0);
 
-        const scale = Math.min(width / this.bar_container.width, app.renderer.height / this.bar_container.height);
+        const scale = app.renderer.height / this.bar_container.height;
         this.bar_container.scale.set(scale, scale);
         this.addChild(this.bar_container);
     }

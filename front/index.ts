@@ -73,3 +73,18 @@ loadAssets().then(_assets => {
     div.appendChild(button);
     document.body.appendChild(div);
 });
+
+const mousePosition = new PIXI.Point();
+
+app.view.addEventListener('mousewheel', (ev: any) => {
+    mousePosition.set(ev.clientX, ev.clientY); // get global position
+    
+    // returns element directly under mouse
+    const found = app.renderer.plugins.interaction.hitTest(
+        mousePosition,
+        app.stage
+    );
+    
+    // Dispatch scroll event
+    if (found) { found.emit('scroll', ev); }
+  });
