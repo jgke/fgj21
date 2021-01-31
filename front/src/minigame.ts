@@ -16,16 +16,6 @@ interface Cocktail {
     description: string;
 }
 
-// from https://javascript.info/array-methods#shuffle-an-array
-// Better than sorting with Math.random because Math.random is biased.
-function shuffle<T extends Array<any>>(array: T): T {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
 export class Minigame extends GameObject {
     public score = 0;
     private bottles: Bottle[][] = [];

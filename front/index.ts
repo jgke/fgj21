@@ -1,8 +1,8 @@
 import * as PIXI from 'pixi.js';
+import * as Tone from 'tone';
 import './reset.css';
 import './index.css';
 import { assets, loadAssets } from './src/assets';
-import * as Tone from 'tone';
 
 import { drunkCanvas, hideDrunk } from './src/drunkCanvas';
 import { initNight } from './src/night';

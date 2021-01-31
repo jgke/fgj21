@@ -2,14 +2,16 @@ import * as PIXI from 'pixi.js';
 import { assets } from './assets';
 import { showDrunk } from './drunkCanvas';
 import { Minigame } from './minigame';
+import { bottleStyle } from './styles';
 
-let bottleStyle = new PIXI.TextStyle({
-  fontFamily: "Comic Sans MS",
-  fontSize: 40,
-  fill: "white",
-  stroke: '#000000',
-  strokeThickness: 1,
-});
+interface BottleOptions {
+  name: string;
+  pourvol: number;
+  alcvol: number;
+  sweetvol: number;
+  description: string;
+  bottle_name: string;
+} 
 
 export class Bottle extends PIXI.Sprite {
   gametime = false;
