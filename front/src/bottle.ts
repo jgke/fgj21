@@ -25,13 +25,13 @@ export interface Pour {
 
 export class Bottle extends PIXI.Sprite {
   gametime = false;
-  gauge: PIXI.Graphics;
+  gauge = new PIXI.Graphics();
   gauge_value = 0;
   gauge_speed = 20;
   private g_vpos: number;
   private g_width: number;
   private g_height: number;
-  private aim_line: PIXI.Graphics;
+  private aim_line = new PIXI.Graphics();
   private minigame: Minigame;
   private options: BottleOptions;
 
@@ -46,9 +46,11 @@ export class Bottle extends PIXI.Sprite {
     this.g_vpos = -this.height * .7;
     this.g_width = this.width / 2 * 1.5;
     this.g_height = this.height / 10;
+
+    this.addChild(this.gauge, this.aim_line);
     
     this.interactive = true;
-    this.on('mousedown', this.drawPourGame);
+    this.on('mousedown', this.togglePourGame);
     this.on('mouseover', onHover);
 
     this.scale.set(.15, .15)
@@ -65,14 +67,7 @@ export class Bottle extends PIXI.Sprite {
     if (this.gametime) {
       this.gauge_value = Math.asin(Math.cos(tick / 2 * this.gauge_speed / 100)) / 2;
       const aim_line_pos = this.gauge_value * this.g_width;
-      if (this.aim_line === undefined) {
-        this.aim_line = new PIXI.Graphics()
-        this.gauge = new PIXI.Graphics()
-        this.drawGauge(this.g_vpos, this.g_width, this.g_height);
-        this.addChild(this.gauge, this.aim_line);
-      } else {
-        this.aim_line.clear();
-      }
+      this.aim_line.clear();
       this.drawAimLine(aim_line_pos);
     }
   }
@@ -82,14 +77,14 @@ export class Bottle extends PIXI.Sprite {
   }
 
   private drawGauge = (g_vpos: number, g_width: number, g_height: number) => {
-    this.gauge = new PIXI.Graphics()
+    this.gauge
       .lineStyle(5, 0xFFFFFF, 1).moveTo(-g_width, g_vpos).lineTo(g_width, g_vpos)
       .moveTo(0, g_vpos - g_height / 2).lineTo(0, g_vpos + g_height / 2)
       .moveTo(-g_width, g_vpos - g_height).lineTo(-g_width, g_vpos + g_height)
       .moveTo(g_width, g_vpos - g_height).lineTo(g_width, g_vpos + g_height);
   }
 
-  private drawPourGame = (event) => {
+  private togglePourGame = (event) => {
     if (this.gametime) {
       // Game ends
       const score = 100 - Math.abs(this.gauge_value) * 100;
@@ -114,6 +109,7 @@ export class Bottle extends PIXI.Sprite {
       }
       this.gametime = false;
       this.aim_line.clear();
+      this.gauge.clear();
 
       // TODO: play pour sound
       this.minigame.pour(pour);
