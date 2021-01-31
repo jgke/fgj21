@@ -78,7 +78,7 @@ export function initNight(app: PIXI.Application, initMorning: (_: string[]) => v
         ticks += delta;
         left.tick(delta, ticks);
         right.tick(delta, ticks);
-        game.score = right.score;
+        game.score = right.getScore();
         score_txt.text = `Score: ${game.score.toFixed(0)}`;
         time -= delta / 60;
         msg.text = `${Math.round(time)}`
