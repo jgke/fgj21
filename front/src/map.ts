@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { assets } from './assets';
-import {GameObject} from './GameObject';
+import { GameObject } from './GameObject';
 
 class Player extends PIXI.Graphics {
     constructor() {
@@ -25,22 +25,26 @@ class Player extends PIXI.Graphics {
 export class HouseMap extends GameObject {
     private hotspots = [
         [15, 25],
+        
         [15, 60],
         [30, 60],
         [30, 25],
-         [30, 70],
-        [25, 70],
+        [30, 70],
+        [15, 70],
+        
         [30, 80],
         [10, 80],
         [10, 90],
-         [15, 90],
+        [15, 90],
         [20, 110],
+        
         [60, 80],
         [60, 30],
-        [80, 80],
-         [80, 105],
-        [90,105],
-        [80, 30],
+        [85, 80],
+        [85, 105],
+        [90, 105],
+        
+        [85, 30],
         [90, 30],
         [100, 80]
     ]
@@ -65,7 +69,7 @@ export class HouseMap extends GameObject {
         18: [11, 14, 17]
     };
 
-    private targets = [0, 3, 5, 6, 9, 10 ,11, 12, 14, 17, 18];
+    private targets = [0, 3, 5, 6, 9, 10, 11, 12, 14, 17, 18];
 
     private targetNames = {
         0: "Kitchen",
@@ -84,7 +88,7 @@ export class HouseMap extends GameObject {
 
     };
 
-    
+
 
     private house: PIXI.Sprite;
     private drunkard: Player;
@@ -120,11 +124,38 @@ export class HouseMap extends GameObject {
         this.house.anchor.y = 0.5;
         this.house.addChild(this.drunkard);
         this.addChild(this.house);
-        this.drunkard.scale.x = 1/5;
-        this.drunkard.scale.y = 1/5;
+        this.drunkard.scale.x = 1 / 10;
+        this.drunkard.scale.y = 1 / 10;
 
         console.log(this.house.getGlobalPosition());
         console.log(this.drunkard.getGlobalPosition());
+
+
+        for (const a of Object.keys(this.routes)) {
+            for (const b of this.routes[a]) {
+                let line = new PIXI.Graphics();
+                line.lineStyle(2, 0x00FF00, 1);
+                line.moveTo(this.hotspots[a][0] - 113 / 2, this.hotspots[a][1] - 121 / 2);
+                line.lineTo(this.hotspots[b][0] - 113 / 2, this.hotspots[b][1] - 121 / 2);
+                this.house.addChild(line);
+            }
+        }
+
+        for (let i = 0; i < this.hotspots.length; i++) {
+            const blip = new PIXI.Graphics();
+            blip.beginFill(0x00FF00);
+            blip.drawCircle(this.hotspots[i][0] - 113 / 2, this.hotspots[i][1] - 121 / 2, 3);
+            blip.endFill();
+            this.house.addChild(blip);
+
+            const label = new PIXI.Text(`${i}`);
+            this.house.addChild(label);
+            label.scale.x = 0.1;
+            label.scale.y = 0.1;
+            label.x = this.hotspots[i][0] - 113 / 2;
+            label.y = this.hotspots[i][1] - 121 / 2;
+
+        }
 
         // for (let a = 0; a < this.hotspots.length; a++) {
         //     for (let b = 0; b < this.hotspots.length; b++) {
@@ -153,7 +184,7 @@ export class HouseMap extends GameObject {
     }
 
     public tick(delta: number, ticks: number) {
-        let playerSpeed = 1;
+        let playerSpeed = 0.1;
         let target = this.hotspots[this.currentTarget];
         let pPos = this.drunkard.getPosition();
         let dx = target[0] - pPos[0];
