@@ -6,6 +6,7 @@ import { bottleStyle } from './styles';
 
 interface BottleOptions {
   name: string;
+  shortname: string;
   pourvol: number;
   alcvol: number;
   sweetvol: number;
@@ -39,7 +40,7 @@ export class Bottle extends PIXI.Sprite {
     this.interactive = true;
     this.on('mousedown', this.drawPourGame);
     
-    const name = new PIXI.Text(`${this.options.name}`, bottleStyle);
+    const name = new PIXI.Text(`${this.options.shortname}`, bottleStyle);
     name.anchor.x = .5;
     name.position.x = this.x;
     name.position.y = this.y - 50;

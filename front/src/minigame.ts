@@ -66,9 +66,15 @@ export class Minigame extends GameObject {
         this.addChild(baari_shading);
     }
 
-    private updateBottles = () => {
+    private destroyBottles = () => {
+        console.log("Destroying bottles! (╯°□°）╯︵ ┻━┻")
+        this.bottles.forEach(b => b.destroy())
         this.bottle_container.removeChildren();
         this.bottles = [];
+    }
+
+    private updateBottles = () => {
+        this.destroyBottles();
 
         const cocktail = this.cocktail_dictionary[this.todays_cocktails[this.current_cocktail]]
         this.pour_amount = cocktail.pour_amount;
@@ -79,7 +85,7 @@ export class Minigame extends GameObject {
         // this.bottles = bottles.map(b => new Bottle(this, 100 + 300 * (i), b));
         this.bottles = bottles.map(b => new Bottle(this, 50 * (i++) + 5 * Math.sin(i * 93879823.234), b));
 
-        console.log(`rendered ${bottles.length} bottles for cocktail ${cocktail.name}`);
+        console.log(`Cocktail number ${this.current_cocktail}: ${cocktail.name} with ${bottles.length} bottles. Available pours: ${this.pour_amount}`);
         this.bottle_container.addChild(...this.bottles);
     }
 
@@ -87,17 +93,17 @@ export class Minigame extends GameObject {
         if (this.poured_amount < this.pour_amount) {
             this.score += score;
             this.poured_amount += 1;
-        } else {
+        } 
+        if (this.poured_amount >= this.pour_amount) {
             this.current_cocktail += 1;
             this.poured_amount = 0;
+            this.updateBottles();
         }
     }
 
     public tick(delta: number, ticks: number) {
         if (this.poured_amount < this.pour_amount) {
             this.bottles.forEach(b => b.updateGame(ticks));
-        } else {
-            this.updateBottles();
         }
     }
 }
