@@ -51,7 +51,7 @@ export function initNight(app: PIXI.Application, initMorning: (_: string[]) => v
     divider.drawRect(app.renderer.width / 2, 0, SEPARATOR_WIDTH, app.renderer.height);
     divider.endFill();
 
-    const right = new Minigame(subwindow_width + SEPARATOR_WIDTH, subwindow_width, app, game.day.cocktails);
+    const right = new Minigame(subwindow_width + SEPARATOR_WIDTH * 1.5, subwindow_width, app, game.day.cocktails);
 
     app.stage.addChild(left, divider, right);
 

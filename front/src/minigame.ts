@@ -7,6 +7,7 @@ import { GameObject } from './GameObject';
 import bottles from '../assets/json/bottles.json';
 import all_cocktails from '../assets/json/cocktails.json';
 import { shuffle } from './functions';
+import { MovableSprite } from './movables';
 
 interface Cocktail {
     name: string;
@@ -24,6 +25,7 @@ export class Minigame extends GameObject {
     private current_cocktail = 0;
     private pour_amount = 0;
     private poured_amount = 0;
+    private bar_container: PIXI.Sprite;
     private bottle_container = new PIXI.Container();
     private cocktail_dictionary: { [index: string]: Cocktail };
     private bottle_dictionary: { [index: string]: BottleOptions };
@@ -40,39 +42,41 @@ export class Minigame extends GameObject {
         const minigame_mask = new PIXI.Graphics().beginFill(0xFF0033).drawRect(x, 0, width, app.renderer.height).endFill();
         this.mask = minigame_mask;
 
-        const background = new PIXI.Sprite(assets.baari_bg.texture);
-        this.counter_height = app.renderer.height / 2;
+        this.bar_container = new MovableSprite(assets.baari_bg.texture);
+        
+        this.counter_height = this.bar_container.height *.55;
         const counter = new PIXI.Sprite(assets.counter.texture);
         counter.y = this.counter_height;
-        const baari_shading = new PIXI.Sprite(assets.baari_shading.texture);
-        const scale = Math.min(width / background.width, app.renderer.height / background.height);
-        background.scale.set(scale, scale);
-        counter.scale.set(scale, scale);
-        baari_shading.scale.set(scale, scale);
-
-        this.addChild(background, counter);
-
+        const bar_lighting = new PIXI.Sprite(assets.baari_shading.texture);
+        
+        this.bar_container.addChild(counter)
+        
         // all_cocktails.cocktails.forEach(c => { if (todays_cocktail_names.includes(c.name)) this.todays_cocktails.push(c); });
         this.todays_cocktails = cocktails.map(c => c.name);
         this.bottle_dictionary = bottles.bottles
-            .reduce((a, bottle) => ({ ...a, [bottle.name]: bottle }), {})
+        .reduce((a, bottle) => ({ ...a, [bottle.name]: bottle }), {})
         this.cocktail_dictionary = all_cocktails.cocktails
-            .reduce((a, cocktail) => ({ ...a, [cocktail.name]: cocktail }), {})
+        .reduce((a, cocktail) => ({ ...a, [cocktail.name]: cocktail }), {})
         this.updateBottles();
-
+        
         this.bottle_container.y = this.counter_height;
-        this.bottle_container.x = width * .2;
+        // Bottles start rendering on the counter from this x position
+        this.bottle_container.x = width * .3;
         this.bottle_container.interactiveChildren = true;
-        this.addChild(this.bottle_container);
-
-        this.addChild(baari_shading);
-
+        this.bar_container.addChild(this.bottle_container);
+        
+        this.bar_container.addChild(bar_lighting);
+        
         const laatikko = new PIXI.Container();
-
+        
         this.bottle_name = this.bottleText(width, app.renderer.height, 1);
         this.bottle_text = this.bottleText(width, app.renderer.height, 0);
-    }
 
+        const scale = Math.min(width / this.bar_container.width, app.renderer.height / this.bar_container.height);
+        this.bar_container.scale.set(scale, scale);
+        this.addChild(this.bar_container);
+    }
+    
     private bottleText(width: number, height: number, y: number): PIXI.Text {
         const fontSize = 30;
         const text = new PIXI.Text("", {
@@ -127,7 +131,7 @@ export class Minigame extends GameObject {
             console.log("Cocktail is broken! Check that the bottle names are exactly as written in bottles.json");
         } else {
             // this.bottles = bottles.map(b => new Bottle(this, 100 + 300 * (i), b));
-            this.bottles = bottles.map(b => new Bottle(this, 80 * (i++) + 5 * Math.sin(i * 93879823.234), b, (_: any) => {
+            this.bottles = bottles.map(b => new Bottle(this, 100 * (i++) + 5 * Math.sin(i * 93879823.234), b, (_: any) => {
                 this.bottle_name.text = `${b.name} (${b.alcvol}%)`;
                 this.bottle_text.text = b.description;
             }));

@@ -1,26 +1,60 @@
 import * as PIXI from 'pixi.js';
-import { PressedKeys } from "./interfaces";
 
 export interface SpriteOptions {
   speed?: number
 }
 
-export class Sprite extends PIXI.Sprite {
-  speed = 0;
-  vx = 0;
-  vy = 0;
+export class MovableSprite extends PIXI.Sprite {
+  data;
+  previous_position;
+  offset = {x: 0, y: 0};
+  dragging: boolean;
 
   constructor(texture: PIXI.Texture, options?: SpriteOptions) {
     super(texture);
-    this.speed = options.speed || 0;
-    this.vx = this.speed;
-    this.vy = this.speed;
+    this.interactive = true;
+
+    // events for drag start
+    this.on('mousedown', this.onDragStart)
+    this.on('touchstart', this.onDragStart)
+    // events for drag end
+    this.on('mouseup', this.onDragEnd)
+    this.on('mouseupoutside', this.onDragEnd)
+    this.on('touchend', this.onDragEnd)
+    this.on('touchendoutside', this.onDragEnd)
+    // events for drag move
+    this.on('mousemove', this.onDragMove)
+    this.on('touchmove', this.onDragMove);
   }
 
-  move(pressed_keys: PressedKeys) {
-    if (pressed_keys.ArrowRight) this.x += this.vx;
-    if (pressed_keys.ArrowLeft) this.x -= this.vx;
-    if (pressed_keys.ArrowUp) this.y -= this.vy;
-    if (pressed_keys.ArrowDown) this.y += this.vy;
+  private onDragStart = (event) => {
+    // store a reference to the data
+    // the reason for this is because of multitouch
+    // we want to track the movement of this particular touch
+    this.data = event.data;
+    this.dragging = true;
+
+    const appCursorLocation = this.data.getLocalPosition(this.parent);
+    // calculate the offset with the app cursor location - sprite location
+    this.offset.x = appCursorLocation.x - this.x; 
+    this.offset.y = appCursorLocation.y - this.y;
+  }
+  
+  private onDragEnd = () => {
+    this.dragging = false;
+    
+    // set the interaction data to null
+    this.data = null;
+    this.offset = {x: 0, y: 0};
+  }
+  
+  private onDragMove = (event) => {
+    if (this.dragging) {
+      const newPosition = event.data.getLocalPosition(this.parent);
+      
+      this.position.x = (newPosition.x - this.offset.x);
+      this.position.y = (newPosition.y - this.offset.y);
+
+    }
   }
 }

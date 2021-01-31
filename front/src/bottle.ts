@@ -73,7 +73,6 @@ export class Bottle extends PIXI.Sprite {
   }
 
   private drawGauge = (g_vpos: number, g_width: number, g_height: number) => {
-    console.log("draw gauge on bottle");
     this.gauge = new PIXI.Graphics()
       .lineStyle(5, 0xFFFFFF, 1).moveTo(-g_width, g_vpos).lineTo(g_width, g_vpos)
       .moveTo(0, g_vpos - g_height / 2).lineTo(0, g_vpos + g_height / 2)
