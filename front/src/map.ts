@@ -78,22 +78,17 @@ export class HouseMap extends GameObject {
         21: [11]
     };
 
-    private targets = [0, 3, 5, 6, 9, 10, 12, 14, 17, 18];
-
     private targetNames = {
         0: "Kitchen",
         3: "Larder",
         5: "Powder Room",
-        6: "Entry Hall",
         9: "Servant's Bathroom",
         10: "Servant's Room",
         12: "Parlor",
         15: "Boudoir",
         17: "Master Bedroom",
         18: "Master Bathroom",
-        21: "Drawing room",
-
-
+        21: "Drawing room"
     };
 
 
@@ -101,7 +96,7 @@ export class HouseMap extends GameObject {
     private house: PIXI.Sprite;
     private drunkard: Player;
     private playerRoute: number[];
-    private currentTarget: number;
+    private currentTarget: string;
     private history: number[];
 
     constructor(width: number, app: PIXI.Application) {
@@ -120,7 +115,7 @@ export class HouseMap extends GameObject {
         this.drunkard = new Player();
         this.history = [0];
         this.playerRoute = this.findRoute(this.history[0], 3, {});
-        this.currentTarget = this.playerRoute.pop();
+        this.currentTarget = `${this.playerRoute.pop()}`;
         this.drunkard.setPosition(this.hotspots[0][0], this.hotspots[0][1]);
 
         this.house = new PIXI.Sprite(assets.tmpmap.texture);
@@ -138,32 +133,43 @@ export class HouseMap extends GameObject {
         console.log(this.house.getGlobalPosition());
         console.log(this.drunkard.getGlobalPosition());
 
+        //show paths between hotspots as green lines
+        // for (const a of Object.keys(this.routes)) {
+        //     for (const b of this.routes[a]) {
+        //         let line = new PIXI.Graphics();
+        //         line.lineStyle(2, 0x00FF00, 1);
+        //         line.moveTo(this.hotspots[a][0] - 113 / 2, this.hotspots[a][1] - 121 / 2);
+        //         line.lineTo(this.hotspots[b][0] - 113 / 2, this.hotspots[b][1] - 121 / 2);
+        //         this.house.addChild(line);
+        //     }
+        // }
 
-        for (const a of Object.keys(this.routes)) {
-            for (const b of this.routes[a]) {
-                let line = new PIXI.Graphics();
-                line.lineStyle(2, 0x00FF00, 1);
-                line.moveTo(this.hotspots[a][0] - 113 / 2, this.hotspots[a][1] - 121 / 2);
-                line.lineTo(this.hotspots[b][0] - 113 / 2, this.hotspots[b][1] - 121 / 2);
-                this.house.addChild(line);
-            }
-        }
+        //show hotspots as green dots with index in black text
+        //  for (let i = 0; i < this.hotspots.length; i++) {
+        //     const blip = new PIXI.Graphics();
+        //     blip.beginFill(0x00FF00);
+        //     blip.drawCircle(this.hotspots[i][0] - 113 / 2, this.hotspots[i][1] - 121 / 2, 3);
+        //     blip.endFill();
+        //     this.house.addChild(blip);
 
-        for (let i = 0; i < this.hotspots.length; i++) {
-            const blip = new PIXI.Graphics();
-            blip.beginFill(0x00FF00);
-            blip.drawCircle(this.hotspots[i][0] - 113 / 2, this.hotspots[i][1] - 121 / 2, 3);
-            blip.endFill();
-            this.house.addChild(blip);
+            //  const label = new PIXI.Text(`${i}`);
+            //  this.house.addChild(label);
+            //  label.scale.x = 0.1;
+            //  label.scale.y = 0.1;
+            //  label.x = this.hotspots[i][0] - 113 / 2;
+            //  label.y = this.hotspots[i][1] - 121 / 2;
+        //  }
 
-            const label = new PIXI.Text(`${i}`);
+        //show names of targets as black text
+        for (const target of Object.keys(this.targetNames)) {
+            const label = new PIXI.Text(`${this.targetNames[target]}`);
             this.house.addChild(label);
             label.scale.x = 0.1;
             label.scale.y = 0.1;
-            label.x = this.hotspots[i][0] - 113 / 2;
-            label.y = this.hotspots[i][1] - 121 / 2;
-
+            label.x = this.hotspots[target][0] - 113 / 2;
+            label.y = this.hotspots[target][1] - 121 / 2;
         }
+
 
         for (let a = 0; a < this.hotspots.length; a++) {
             for (let b = 0; b < this.hotspots.length; b++) {
@@ -201,17 +207,18 @@ export class HouseMap extends GameObject {
 
         if (dx * dx + dy * dy <= 10) {
             if (this.playerRoute.length === 0) {
-                this.history.push(this.currentTarget);
-                let curIndex = this.targets.indexOf(this.currentTarget);
-                let newTarget = Math.floor(Math.random() * (this.targets.length - 1));
+                this.history.push(Number.parseInt(this.currentTarget));
+                const targets = Object.keys(this.targetNames);
+                let curIndex = targets.indexOf(this.currentTarget);
+                let newTarget = Math.floor(Math.random() * (targets.length - 1));
                 if (newTarget >= curIndex) {
                     newTarget += 1;
                 }
-                this.playerRoute = this.findRoute(this.currentTarget, this.targets[newTarget], {});
-                //console.log("New route from", this.currentTarget, "to", this.targets[newTarget], ": ", this.playerRoute);
-                this.currentTarget = this.playerRoute.pop();
+                this.playerRoute = this.findRoute(Number.parseInt(this.currentTarget), Number.parseInt(targets[newTarget]), {});
+                //console.log("New route from", this.currentTarget, "to", targets[newTarget], ": ", this.playerRoute);
+                this.currentTarget = `${this.playerRoute.pop()}`;
             } else {
-                this.currentTarget = this.playerRoute.pop();
+                this.currentTarget = `${this.playerRoute.pop()}`;
             }
         } else {
             let x = Math.sign(dx) * Math.min(Math.abs(dx), playerSpeed * delta);
