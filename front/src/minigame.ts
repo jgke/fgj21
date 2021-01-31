@@ -71,12 +71,12 @@ export class Minigame extends GameObject {
 
         const laatikko = new PIXI.Container();
 
-        this.bottle_name = this.bottleText(width, app.renderer.height, 1);
-        this.bottle_text = this.bottleText(width, app.renderer.height, 0);
-
         const scale = app.renderer.height / this.bar_container.height;
         this.bar_container.scale.set(scale, scale);
         this.addChild(this.bar_container);
+
+        this.bottle_name = this.bottleText(width, app.renderer.height, 1);
+        this.bottle_text = this.bottleText(width, app.renderer.height, 0);
     }
 
     private bottleText(width: number, height: number, y: number): PIXI.Text {
@@ -142,7 +142,7 @@ export class Minigame extends GameObject {
                 this.bottle_container.addChild(...this.bottles);
             }            
         } else {
-            console.log("You have been served enoug.")
+            console.log("You have been served enough.")
         }
     }
 
